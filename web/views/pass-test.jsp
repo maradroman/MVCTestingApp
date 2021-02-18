@@ -24,32 +24,29 @@
 
 <form style="font-size: 16px; font-family: 'Montserrat'" method="post" id="testForm">
     <c:forEach varStatus="loop" items="${list}" var="question">
-    <input type="text" name="testID" value="${loop.index + 1}">
+    <input type="hidden" name="questions" value="${question.id}">
     <div class="container card question">
         <strong class="card-header mb-2" id="${question.id}">
                    ${loop.index + 1}.
             ${question.text}
-
-
            </strong>
-
         <div class="form-check d-flex align-items-center mb-2">
-            <input class="form-check-input position-static mt-0 mr-2" value="true" type="checkbox" name="1">
+            <input class="form-check-input position-static mt-0 mr-2" value="true" type="checkbox" name="${question.id}1">
             ${question.option1}
         </div>
 
         <div class="form-check d-flex align-items-center mb-2">
-            <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true" name="2">
+            <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true" name="${question.id}2">
             ${question.option2}
         </div>
 
         <div class="form-check d-flex align-items-center mb-2">
-            <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true"  name="3">
+            <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true"  name="${question.id}3">
             ${question.option3}
         </div>
 
         <div class="form-check d-flex align-items-center mb-2">
-            <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true"  name="4">
+            <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true"  name="${question.id}4">
             ${question.option4}
         </div>
     </div>
