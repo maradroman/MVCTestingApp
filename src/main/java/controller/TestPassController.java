@@ -2,8 +2,11 @@ package controller;
 
 import dao.QuestionDAO;
 import dao.QuestionDAOImpl;
+import dao.TestPassDAO;
+import dao.TestPassDAOImpl;
 import entity.Answer;
 import entity.Question;
+import entity.TestPass;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,41 +21,55 @@ import java.util.*;
 @WebServlet("/pass")
 public class TestPassController extends HttpServlet {
     QuestionDAO questionDAO = new QuestionDAOImpl();
+
+    TestPassDAO testPassDAO = new TestPassDAOImpl();
+    TestPass testPass;
+
     ArrayList<Answer> listAnswer = new ArrayList<>();
     Answer answer = new Answer();
-
     Long testStart = null;
     Long testEnd = null;
     Long testTime = null;
-
-
+    Integer result = 0;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String questions[] = req.getParameterValues("questions");
         for (String question: questions
              ) {
-            System.out.println("Start of question " + question + " ___________");
-            System.out.println("Question id is " + question + " and first answer is " + req.getParameter(question + "1"));
-            System.out.println("Question id is " + question + " and second answer is " + req.getParameter(question + "2"));
-            System.out.println("Question id is " + question + " and third answer is " + req.getParameter(question + "3"));
-            System.out.println("Question id is " + question + " and fourth answer is " + req.getParameter(question + "4"));
-            System.out.println("end of question " + question + " ___________");
-            System.out.println("#####################################");
+            testPass = new TestPass();
+            testPass.setQuestionID(Integer.parseInt(question));
+            if (req.getParameter(question + "1") == null){
+                testPass.setOption1Chosen("false");
+            }else{testPass.setOption1Chosen(req.getParameter(question + "1"));}
 
+            if (req.getParameter(question + "2") == null){
+                testPass.setOption2Chosen("false");
+            }else{testPass.setOption2Chosen(req.getParameter(question + "2"));}
+
+            if (req.getParameter(question + "3") == null){
+                testPass.setOption3Chosen("false");
+            }else{testPass.setOption3Chosen(req.getParameter(question + "3"));}
+
+            if (req.getParameter(question + "4") == null){
+                testPass.setOption4Chosen("false");
+            }else{testPass.setOption4Chosen(req.getParameter(question + "4"));}
+            System.out.println(testPass);
+            if (testPassDAO.checkAnswer(testPass)){
+                result += 1;
+            }
         }
 
-
-
-
-
+        System.out.println(questions.length);
+        int resultPercent = result/questions.length;
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.println(resultPercent);
+        printWriter.close();
 
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         testStart = System.currentTimeMillis();
-
-
 
         List<Question> list = questionDAO.get(Integer.parseInt(req.getParameter("testID")));
         req.setAttribute("list", list);

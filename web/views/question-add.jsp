@@ -26,12 +26,13 @@
 
     <form action="${pageContext.request.contextPath}/questions" method="post" id="form">
 
-        <select class="form-select" name="testID" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="1">cpp</option>
-            <option value="2">java</option>
-            <option value="3">js</option>
-        </select>
+<%--        <select class="form-select" name="testID" aria-label="Default select example">--%>
+<%--            <option selected>Open this select menu</option>--%>
+<%--            <option value="1">cpp</option>--%>
+<%--            <option value="2">java</option>--%>
+<%--            <option value="3">js</option>--%>
+<%--        </select>--%>
+        <input type="hidden" name="testID" value="<%= request.getParameter("testID")%>">
 
         <div class="mb-3">
             <label for="Question" class="form-label">Question</label>

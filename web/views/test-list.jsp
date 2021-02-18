@@ -45,6 +45,7 @@ if (username == null){
             <th>Topic</th>
             <th>Questions</th>
             <th>Pass test</th>
+            <th>Add question</th>
         </tr>
         </thead>
         <tbody>
@@ -59,6 +60,10 @@ if (username == null){
 
                     <td>
                         <a href="${pageContext.request.contextPath}/pass?time=${test.timeForTest}&testID=${test.id}&userID=${userID}" class="btn btn-warning" style="" role="button" data-bs-toggle="button">pass</a>
+                    </td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/questions?testID=${test.id}" class="btn btn-warning" style="" role="button" data-bs-toggle="button">add</a>
+
                     </td>
                 </tr>
 
