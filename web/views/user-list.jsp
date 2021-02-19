@@ -1,18 +1,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<%
+
+    String username = (String) session.getAttribute("username");
+
+    System.out.println(session.getAttribute("userID"));
+    if (username == null){
+        response.sendRedirect("login");
+    }
+%>
 <head>
     <title>Title</title>
     <link href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
 </head>
-<%
-    String username = (String) session.getAttribute("username");
-    if (username == null){
-        response.sendRedirect("login");
-    }
-%>
+
 <body>
 
 

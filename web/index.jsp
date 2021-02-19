@@ -7,6 +7,15 @@
 <%--&ndash;%&gt;--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+    <%
+
+String username = (String) session.getAttribute("username");
+
+    System.out.println(session.getAttribute("userID"));
+if (username == null){
+    response.sendRedirect("login");
+}
+%>
 <head>
     <link href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">

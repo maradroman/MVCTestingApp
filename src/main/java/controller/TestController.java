@@ -1,8 +1,7 @@
 package controller;
 
-import dao.TestDAO;
-import dao.TestDAOImpl;
-import dao.UserDAO;
+import dao.*;
+import entity.PassedTest;
 import entity.Test;
 import entity.User;
 
@@ -12,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -19,19 +19,26 @@ import java.util.List;
 @WebServlet("/tests")
 public class TestController extends HttpServlet {
 TestDAO testDAO = null;
+PassedTestDAO passedTestDAO = null;
 
-public TestController(){testDAO = new TestDAOImpl();}
+public TestController(){
+    testDAO = new TestDAOImpl();
+    passedTestDAO = new PassedTestDAOImpl();
+}
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+//        session.getAttribute("userID");
         String action = req.getParameter("action");
         if (action !=null&&action.equals("add")){
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/test-add.jsp");
             requestDispatcher.forward(req,resp);
         }else {
-
-            List<Test> list = testDAO.get();
-            req.setAttribute("list", list);
+            List<PassedTest> passedTestList = passedTestDAO.get((Integer) session.getAttribute("userID"));
+            List<Test> testsList = testDAO.get();
+            req.setAttribute("list", testsList);
+            req.setAttribute("listpassed", passedTestList);
             req.setAttribute("message", req.getSession().getAttribute("message"));
 
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/test-list.jsp");

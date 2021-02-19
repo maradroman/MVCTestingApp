@@ -39,6 +39,7 @@ public class LoginController extends HttpServlet {
        if (authResult != null){
            session.setAttribute("username", authResult.getUsername());
            session.setAttribute("userID", authResult.getId());
+           session.setAttribute("type", authResult.getType());
            resp.sendRedirect(req.getContextPath());
 
        }else {

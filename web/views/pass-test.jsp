@@ -1,6 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
+<%
+    String username = (String) session.getAttribute("username");
+    System.out.println(session.getAttribute("userID"));
+    if (username == null){
+        response.sendRedirect("login");
+    }
+    request.setAttribute("testID", request.getParameter("testID"));
+%>
 <head>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
@@ -14,18 +22,16 @@
 </head>
 <body>
 <div class="container pt-5">
-
     <div style="position: sticky; top: 0; z-index: 2" class="card align-items-center bg-white mb-5">
         <h3>Time left:</h3>
         <div class="badge" style="font-size: 35px; margin-bottom: 20px" id="clock"></div>
         <button form="testForm" class="btn btn-warning align-self-end" style="width: 100%">Submit test</button>
-
     </div>
 
 <form style="font-size: 16px; font-family: 'Montserrat'" method="post" id="testForm">
     <c:forEach varStatus="loop" items="${list}" var="question">
     <input type="hidden" name="questions" value="${question.id}">
-    <div class="container card question">
+    <div class="container card question mb-5">
         <strong class="card-header mb-2" id="${question.id}">
                    ${loop.index + 1}.
             ${question.text}
@@ -50,8 +56,7 @@
             ${question.option4}
         </div>
     </div>
-<br>
-<br>
+
     </c:forEach>
 </form>
 </div>
@@ -60,12 +65,8 @@
     const testTimeMs = <%
     if (request.getParameter("time")!=null){
         out.print(Integer.parseInt(request.getParameter("time")));
-    }else {out.print(10);}
-
-
-    %> * 60;
+    }else {out.print(10);}%> * 60;
     const timerBlock = document.querySelector('#clock');
-
     function timer (seconds, tick, result) {
         if (seconds > 0) {
             tick(seconds);
@@ -84,37 +85,9 @@
         const modifiedSeconds = seconds < 10 ? '0' + seconds : seconds;
         timerBlock.innerHTML = minutes + ':' + modifiedSeconds;
     }, function () {
-        const form = document.querySelector('#form');
-
+        const form = document.querySelector('#testForm');
         form.submit();
     });
-
 </script>
-
-<script>
-    function buildForm() {
-        const formValue = [];
-        let answers = $('form').serializeArray();
-        for (let i = 0; i < answers.length; i++) {
-            const answer = answers[i];
-            const id = +answer.name;
-            const values = answers.filter(ans => ans.name === answer.name).map(ans => +ans.value);
-            formValue.push({ id, values });
-
-            answers = answers.filter(ans => ans.name !== answer.name);
-            i = -1;
-        }
-
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", "${pageContext.request.contextPath}/pass");
-        xhr.setRequestHeader( "Content-Type", "application/json" );
-        xhr.send(JSON.stringify({formValue}));
-    }
-
-
-</script>
-
-
-<script src="jquery.countdown.js"></script>
 </body>
 </html>

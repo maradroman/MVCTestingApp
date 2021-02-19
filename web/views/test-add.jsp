@@ -9,17 +9,21 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"
          language="java"%>
 <html>
+<%
+
+    String username = (String) session.getAttribute("username");
+
+    System.out.println(session.getAttribute("userID"));
+    if (username == null){
+        response.sendRedirect("login");
+    }
+%>
 <head>
     <title>Add test</title>
     <link href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
-<%
-    String username = (String) session.getAttribute("username");
-    if (username == null){
-        response.sendRedirect("login");
-    }
-%>
+
 <body>
 <div class="container" style="width: 450px; padding-top: 70px">
 <div class="card">

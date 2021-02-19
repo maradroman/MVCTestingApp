@@ -2,6 +2,15 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"
          language="java"%>
 <html>
+<%
+
+    String username = (String) session.getAttribute("username");
+
+    System.out.println(session.getAttribute("userID"));
+    if (username == null){
+        response.sendRedirect("login");
+    }
+%>
 <head>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Title</title>
@@ -12,15 +21,7 @@
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 </head>
 
-<%
 
-String username = (String) session.getAttribute("username");
-
-    System.out.println(session.getAttribute("userID"));
-if (username == null){
-    response.sendRedirect("login");
-}
-%>
 <body>
 
 <div class="alert alert-success card toast align-items-center shadow p-3 mb-5 bg-body rounded" style="position: absolute; right:20px" role="alert" aria-live="assertive" aria-atomic="true">
@@ -33,11 +34,13 @@ if (username == null){
 </div>
 <div class="container" style="padding-top: 10px; margin-bottom: 100px">
     <h1><span class="badge badge-secondary">Tests</span></h1>
-    <a href="${pageContext.request.contextPath}/logout.jsp" class="btn btn-outline-success" style="width: 200px" role="button" data-bs-toggle="button">Logout</a>
+    <a href="${pageContext.request.contextPath}/logout.jsp" class="btn btn-outline-success " style="width: 200px; position: absolute; top: 10px; left: 15px" role="button" data-bs-toggle="button">Logout</a>
+    <a href="${pageContext.request.contextPath}/tests?action=add" class="btn btn-outline-success" style="width: 200px" role="button" data-bs-toggle="button">Add test</a>
 
     <table id="datatable" class="table table-hover">
         <thead>
         <tr class="thead-light">
+            <th>ID</th>
             <th>Test name</th>
             <th>Complexity</th>
             <th>Number of requests</th>
@@ -51,6 +54,7 @@ if (username == null){
         <tbody>
             <c:forEach items="${list}" var="test">
                 <tr>
+                    <td>${test.id}</td>
                     <td>${test.name}</td>
                     <td>${test.complexity}</td>
                     <td>${test.numberOfRequests}</td>
@@ -59,10 +63,25 @@ if (username == null){
                     <td>${test.questions.size()}</td>
 
                     <td>
-                        <a href="${pageContext.request.contextPath}/pass?time=${test.timeForTest}&testID=${test.id}&userID=${userID}" class="btn btn-warning" style="" role="button" data-bs-toggle="button">pass</a>
+                        <c:set scope="request" var="flag" value="false"/>
+                        <c:set scope="request" var="result" value=""/>
+                        <c:forEach items="${listpassed}" var="passedTest">
+                             <c:if test="${test.id == passedTest.testID}">
+<%--                                 <a href="${pageContext.request.contextPath}/pass?time=${test.timeForTest}&testID=${test.id}&userID=${userID}" class="btn btn-warning" style="" role="button" data-bs-toggle="button">pass</a>--%>
+                                     <c:set scope="request" var="flag" value="true"/>
+                                     <c:set scope="request" var="result" value="${passedTest.result}"/>
+
+                             </c:if>
+                        </c:forEach>
+                        <c:if test="${flag == 'false'&& test.questions.size() !=0}">
+                            <a href="${pageContext.request.contextPath}/pass?time=${test.timeForTest}&testID=${test.id}&userID=${userID}" class="btn btn-warning" style="" role="button" data-bs-toggle="button">pass</a>
+                        </c:if>
+                        <c:if test="${flag == 'true'}">
+                            Result:${result}%
+                        </c:if>
                     </td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/questions?testID=${test.id}" class="btn btn-warning" style="" role="button" data-bs-toggle="button">add</a>
+                        <a href="${pageContext.request.contextPath}/questions?testID=${test.id}" class="btn btn-warning" style="" role="button" data-bs-toggle="button">+</a>
 
                     </td>
                 </tr>
@@ -71,7 +90,7 @@ if (username == null){
         </tbody>
         <tfoot></tfoot>
     </table>
-    <a href="${pageContext.request.contextPath}/tests?action=add" class="btn btn-outline-success" style="width: 200px" role="button" data-bs-toggle="button">Add test</a>
+
 </div>
 
 <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
