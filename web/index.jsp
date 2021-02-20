@@ -7,15 +7,15 @@
 <%--&ndash;%&gt;--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-    <%
+<%--    <%--%>
 
-String username = (String) session.getAttribute("username");
+<%--String username = (String) session.getAttribute("username");--%>
 
-    System.out.println(session.getAttribute("userID"));
-if (username == null){
-    response.sendRedirect("login");
-}
-%>
+<%--    System.out.println(session.getAttribute("userID"));--%>
+<%--if (username == null){--%>
+<%--    response.sendRedirect("login");--%>
+<%--}--%>
+<%--%>--%>
 <head>
     <link href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -25,25 +25,24 @@ if (username == null){
     <title>Redirecting</title>
 </head>
 <body>
-<%if (request.getAttribute("page") == "question"){
-    request.getSession().setAttribute("message", request.getAttribute("message"));
-//request.getRequestDispatcher("/tests").forward(request, response);
-
-//    RequestDispatcher requestDispatcher = request.getRequestDispatcher("/tests");
-    response.sendRedirect(request.getContextPath()+"/tests");
-
-}%>
-
-<%if (request.getAttribute("page") == "user"){
-    request.getSession().setAttribute("message", request.getAttribute("message"));
+<%
+if (request.getSession().getAttribute("type") == null){
+response.sendRedirect("login");
+}
+else if (request.getSession().getAttribute("type").equals("admin")){
     response.sendRedirect(request.getContextPath()+"/users?action=LIST");
+
+}else if (request.getSession().getAttribute("type").equals("student")){
+   response.sendRedirect(request.getContextPath()+"/users");
 }
 %>
+
+
 Please wait for redirection or: <br>
 
 <div class="container" style="width: 450px; padding-top: 70px">
     <a href="${pageContext.request.contextPath}/users?action=LIST" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">users</a>
-    <a href="${pageContext.request.contextPath}/views/user-add.jsp" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">users</a>
+    <a href="${pageContext.request.contextPath}/views/publicPages/user-add.jsp" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">users</a>
     <a href="${pageContext.request.contextPath}/tests" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">tests</a>
     <a href="${pageContext.request.contextPath}/tests?action=add" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">test-add</a>
     <a href="${pageContext.request.contextPath}/questions" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">question-add</a>

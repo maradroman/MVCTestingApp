@@ -29,10 +29,12 @@ public TestController(){
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-//        session.getAttribute("userID");
+        String type = session.getAttribute("type").toString();
+
+        if (type.equals("admin")){
         String action = req.getParameter("action");
         if (action !=null&&action.equals("add")){
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/test-add.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/test-add.jsp");
             requestDispatcher.forward(req,resp);
         }else {
             List<PassedTest> passedTestList = passedTestDAO.get((Integer) session.getAttribute("userID"));
@@ -41,9 +43,21 @@ public TestController(){
             req.setAttribute("listpassed", passedTestList);
             req.setAttribute("message", req.getSession().getAttribute("message"));
 
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/test-list.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/test-list.jsp");
             requestDispatcher.forward(req, resp);
         }
+        }
+        if (type.equals("student")){
+            List<PassedTest> passedTestList = passedTestDAO.get((Integer) session.getAttribute("userID"));
+            List<Test> testsList = testDAO.get();
+            req.setAttribute("list", testsList);
+            req.setAttribute("listpassed", passedTestList);
+            req.setAttribute("message", req.getSession().getAttribute("message"));
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/test-list.jsp");
+            requestDispatcher.forward(req, resp);
+        }
+
     }
 
     @Override
@@ -69,8 +83,11 @@ public TestController(){
             req.setAttribute("page", "test");
         }
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
-requestDispatcher.forward(req,resp);
+        try {
+            resp.sendRedirect(req.getContextPath() + "/tests");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

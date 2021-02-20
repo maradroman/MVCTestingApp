@@ -18,7 +18,7 @@
 </head>
 
 <body>
-
+<jsp:include page="header_admin.jsp"/>
 
 
 <div class="" style="position: absolute; right:20px" role="alert" aria-live="assertive" aria-atomic="true">
@@ -85,7 +85,7 @@
 
         </c:forEach>
     </table>
-    <button class="btn btn-outline-success" style="width: 200px" onclick="window.location.href='views/user-add.jsp'">Add user</button>
+    <button class="btn btn-outline-success" style="width: 200px" onclick="window.location.href='../publicPages/user-add.jsp'">Add user</button>
 </div>
 
 </body>

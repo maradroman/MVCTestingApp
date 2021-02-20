@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/users/unblock")
@@ -21,6 +22,13 @@ public class UserUnblock extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+
+        String type = (String) session.getAttribute("type");
+
+        if (type.equals("admin")){
+
+
         System.out.println("unblock servlet");
         String userName = req.getParameter("userName");
         User user = new User();
@@ -28,7 +36,10 @@ public class UserUnblock extends HttpServlet {
         if (userDAO.unBlock(user)){
             req.setAttribute("message", "User unblocked successfully");
         }
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
         requestDispatcher.forward(req, resp);
     }
-}
+
+        else {RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
+        requestDispatcher.forward(req, resp);}
+}}

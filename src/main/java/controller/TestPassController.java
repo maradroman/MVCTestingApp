@@ -26,10 +26,12 @@ public class TestPassController extends HttpServlet {
     Long testStart = null;
     Long testEnd = null;
     Long testTime = null;
-    Integer result = 0;
+    Integer result = null;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        result = 0;
+        req.setCharacterEncoding("UTF-8");
         req.setAttribute("testID", req.getParameter("testID"));
         HttpSession session = req.getSession();
         testEnd = System.currentTimeMillis();
@@ -66,9 +68,6 @@ public class TestPassController extends HttpServlet {
         String testID = req.getParameter("testID");
 
         int percentRound = roundResult(result, questions.length);
-        PrintWriter printWriter = resp.getWriter();
-        printWriter.println("You reached " + result + " right answers out of " + questions.length + " that is the " + percentRound + "%");
-        printWriter.close();
         passedTest = new PassedTest();
         passedTest.setUserID((Integer) session.getAttribute("userID"));
         passedTest.setTestID(Integer.parseInt(testID));
@@ -78,8 +77,12 @@ public class TestPassController extends HttpServlet {
         if (passedTestDAO.save(passedTest)){
             req.setAttribute("message", "Result saved successfully");
         }
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("tests");
-        requestDispatcher.forward(req, resp);
+
+        try {
+            resp.sendRedirect(req.getContextPath() + "/tests");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public int roundResult(Integer result, Integer qOfQuestions){
@@ -92,12 +95,21 @@ public class TestPassController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        HttpSession session = req.getSession();
+        String type = session.getAttribute("type").toString();
         testStart = System.currentTimeMillis();
         List<Question> list = questionDAO.get(Integer.parseInt(req.getParameter("testID")));
         req.setAttribute("list", list);
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/pass-test.jsp");
-        requestDispatcher.forward(req,resp);
+
+
+        if (type.equals("student")){
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/pass-test.jsp");
+            requestDispatcher.forward(req,resp);
+        }
+        if (type.equals("admin")){
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/pass-test.jsp");
+            requestDispatcher.forward(req,resp);
+        }
     }
 }

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/questions")
 public class QuestionController extends HttpServlet {
@@ -21,16 +20,16 @@ public class QuestionController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        String type = session.getAttribute("type").toString();
 
-
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/question-add.jsp");
-        requestDispatcher.forward(req,resp);
-
-    }
-
-
-
-
+        if (type.equals("admin")){
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/question-add.jsp");
+        requestDispatcher.forward(req,resp);}
+        else {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
+            requestDispatcher.forward(req,resp);}
+        }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -101,7 +100,10 @@ public class QuestionController extends HttpServlet {
             req.setAttribute("page", "question");
         }
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
-        requestDispatcher.forward(req, resp);
+        try {
+            resp.sendRedirect(req.getContextPath() + "/tests");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

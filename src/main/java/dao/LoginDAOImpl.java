@@ -26,8 +26,12 @@ public class LoginDAOImpl implements LoginDAO {
                 login = new Login();
                 login.setId(resultSet.getInt("id"));
                 login.setUsername(resultSet.getString("username"));
+                login.setName(resultSet.getString("name"));
+                login.setSurname(resultSet.getString("surname"));
+                login.setEmail(resultSet.getString("email"));
+                login.setPassword(resultSet.getString("password"));
                 login.setType(resultSet.getString("type"));
-                System.out.println(login);
+                login.setIsBlocked(resultSet.getString("isBlocked"));
             }
         } catch (SQLException throwables) {
             login = null;

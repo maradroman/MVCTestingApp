@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,20 +26,38 @@ public class UserController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        HttpSession session = req.getSession();
         String action = req.getParameter("action");
+        String type = (String) session.getAttribute("type");
+        if (type != null){
 
-        if (action == null) {
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
+        if (type.equals("admin")){
+            if (action == null) {
+                listUsers(req, resp);
+            } else {
+                if (action.equals("LIST")) {
+                    listUsers(req, resp);
+                }
+                if (action.equals("EDIT")){
+                    getSingleUser(req, resp);
+                }
+
+
+        }
+
+        }
+        if (type.equals("student")){
+            String id = session.getAttribute("userID").toString();
+            User user = userDAO.getByID(Integer.parseInt(id));
+            req.setAttribute("user", user);
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/user-info.jsp");
             requestDispatcher.forward(req, resp);
-        } else {
-            if (action.equals("LIST")) {
-               listUsers(req, resp);
-            }
-            if (action.equals("EDIT")){
-                getSingleUser(req, resp);
-            }
 
-
+        }
+        }
+        if (action.equals("SIGNUP")){
+            signUpUser(req, resp);
         }
     }
     public void listUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,13 +65,13 @@ public class UserController extends HttpServlet {
         req.setAttribute("list", list);
         req.setAttribute("message", req.getSession().getAttribute("message"));
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/user-list.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/user-list.jsp");
         requestDispatcher.forward(req, resp);
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-       String username = req.getParameter("username");
+        String username = req.getParameter("username");
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String email = req.getParameter("email");
@@ -96,5 +115,10 @@ public class UserController extends HttpServlet {
         requestDispatcher.forward(req, resp);
 
 
+    }
+
+    public void signUpUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/publicPages/user-add.jsp");
+        requestDispatcher.forward(req, resp);
     }
 }
