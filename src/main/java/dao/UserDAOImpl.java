@@ -3,7 +3,6 @@ package dao;
 import controller.DBConnectionUtil;
 import entity.User;
 
-import javax.jws.soap.SOAPBinding;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,7 @@ public class UserDAOImpl implements UserDAO {
         List <User> list = null;
         User user = null;
 
-        list = new ArrayList<User>();
+        list = new ArrayList<>();
         String sql = "SELECT * FROM users";
         connection = DBConnectionUtil.openConnection();
 

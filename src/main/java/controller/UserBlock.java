@@ -37,8 +37,21 @@ public class UserBlock extends HttpServlet {
             req.setAttribute("message", "User blocked successfully");
         }
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
-        requestDispatcher.forward(req, resp);
-    }
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         else {RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
-            requestDispatcher.forward(req, resp);}
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 }}

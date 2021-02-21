@@ -19,7 +19,7 @@ public class TestDAOImpl implements TestDAO {
         List <Test> list = null;
         Test test = null;
 
-        list = new ArrayList<Test>();
+        list = new ArrayList<>();
         String sql = "SELECT * FROM tests";
         connection = DBConnectionUtil.openConnection();
 
@@ -59,7 +59,6 @@ public class TestDAOImpl implements TestDAO {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
             while(resultSet.next()){
-//                test = buildTest(id, resultSet);
                 test = new Test();
                 test.setId(resultSet.getInt("id"));
                 test.setName(resultSet.getString("name"));

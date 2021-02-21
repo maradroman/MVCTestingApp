@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @WebServlet("/pass")
@@ -31,7 +31,11 @@ public class TestPassController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         result = 0;
-        req.setCharacterEncoding("UTF-8");
+        try {
+            req.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         req.setAttribute("testID", req.getParameter("testID"));
         HttpSession session = req.getSession();
         testEnd = System.currentTimeMillis();
@@ -43,7 +47,11 @@ public class TestPassController extends HttpServlet {
         for (String question: questions
              ) {
             testPass = new TestPass();
-            testPass.setQuestionID(Integer.parseInt(question));
+            try {
+                testPass.setQuestionID(Integer.parseInt(question));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
 
             if (req.getParameter(question + "1") == null){
                 testPass.setOption1Chosen("false");
@@ -70,7 +78,11 @@ public class TestPassController extends HttpServlet {
         int percentRound = roundResult(result, questions.length);
         passedTest = new PassedTest();
         passedTest.setUserID((Integer) session.getAttribute("userID"));
-        passedTest.setTestID(Integer.parseInt(testID));
+        try {
+            passedTest.setTestID(Integer.parseInt(testID));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         passedTest.setResult(percentRound);
         passedTest.setTimeSpent(Math.toIntExact(testTime));
 
@@ -98,18 +110,31 @@ public class TestPassController extends HttpServlet {
         HttpSession session = req.getSession();
         String type = session.getAttribute("type").toString();
         testStart = System.currentTimeMillis();
-        List<Question> list = questionDAO.get(Integer.parseInt(req.getParameter("testID")));
+        List<Question> list = null;
+        try {
+            list = questionDAO.get(Integer.parseInt(req.getParameter("testID")));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         req.setAttribute("list", list);
 
 
 
         if (type.equals("student")){
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/pass-test.jsp");
-            requestDispatcher.forward(req,resp);
+            try {
+                requestDispatcher.forward(req,resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
         }
         if (type.equals("admin")){
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/pass-test.jsp");
-            requestDispatcher.forward(req,resp);
+            try {
+                requestDispatcher.forward(req,resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

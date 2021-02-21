@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @WebServlet("/users")
@@ -34,16 +35,32 @@ public class UserController extends HttpServlet {
 
         if (type.equals("admin")){
             if (action == null) {
-                listUsers(req, resp);
+                try {
+                    listUsers(req, resp);
+                } catch (ServletException | IOException e) {
+                    e.printStackTrace();
+                }
             } else {
                 if (action.equals("LIST")) {
-                    listUsers(req, resp);
+                    try {
+                        listUsers(req, resp);
+                    } catch (ServletException | IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (action.equals("EDIT")){
-                    getSingleUser(req, resp);
+                    try {
+                        getSingleUser(req, resp);
+                    } catch (ServletException | IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if (action.equals("ADD")){
-                    addUser(req, resp);
+                    try {
+                        addUser(req, resp);
+                    } catch (ServletException | IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
 
@@ -53,20 +70,37 @@ public class UserController extends HttpServlet {
         if (type.equals("student")){
             if (action == null) {
                 String id = session.getAttribute("userID").toString();
-                User user = userDAO.getByID(Integer.parseInt(id));
+                User user = null;
+                try {
+                    user = userDAO.getByID(Integer.parseInt(id));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
                 req.setAttribute("user", user);
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/user-info.jsp");
-                requestDispatcher.forward(req, resp);
+                try {
+                    requestDispatcher.forward(req, resp);
+                } catch (ServletException | IOException e) {
+                    e.printStackTrace();
+                }
             }
             else if (action.equals("EDIT")){
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/user-edit.jsp");
-                requestDispatcher.forward(req, resp);
+                try {
+                    requestDispatcher.forward(req, resp);
+                } catch (ServletException | IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         }
         if (action != null){
         if (action.equals("SIGNUP")){
-            signUpUser(req, resp);
+            try {
+                signUpUser(req, resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
         }}
     }
     public void listUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -79,7 +113,11 @@ public class UserController extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
+        try {
+            req.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         HttpSession session = req.getSession();
         if (session.getAttribute("userID") == null) {
@@ -94,7 +132,11 @@ public class UserController extends HttpServlet {
 
             User user = new User();
             if (!id.isEmpty()) {
-                user.setId(Integer.parseInt(id));
+                try {
+                    user.setId(Integer.parseInt(id));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
             user.setUsername(username);
             user.setName(name);
@@ -117,7 +159,11 @@ public class UserController extends HttpServlet {
                 }
             }
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
-            requestDispatcher.forward(req, resp);
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
         }
 
         else {
@@ -131,7 +177,11 @@ public class UserController extends HttpServlet {
                 id = (Integer) session.getAttribute("userID");
             }
             else if (session.getAttribute("type").equals("admin")) {
-                id = Integer.parseInt(req.getParameter("id"));
+                try {
+                    id = Integer.parseInt(req.getParameter("id"));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
 
             User user = new User();
@@ -156,7 +206,11 @@ public class UserController extends HttpServlet {
                }
             }
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
-            requestDispatcher.forward(req, resp);
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }

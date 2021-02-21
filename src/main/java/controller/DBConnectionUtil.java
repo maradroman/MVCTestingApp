@@ -5,6 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
+/**
+ * Returns the connection object that can be used to connect to database
+ *
+ * Class.forName(DRIVER) - dynamically load the driver class into memory, after which it is automatically registered
+ */
 public class DBConnectionUtil {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "1234";

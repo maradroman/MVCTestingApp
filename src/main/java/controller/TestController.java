@@ -3,7 +3,6 @@ package controller;
 import dao.*;
 import entity.PassedTest;
 import entity.Test;
-import entity.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,7 +34,11 @@ public TestController(){
         String action = req.getParameter("action");
         if (action !=null&&action.equals("add")){
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/test-add.jsp");
-            requestDispatcher.forward(req,resp);
+            try {
+                requestDispatcher.forward(req,resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
         }else {
             List<PassedTest> passedTestList = passedTestDAO.get((Integer) session.getAttribute("userID"));
             List<Test> testsList = testDAO.get();
@@ -44,7 +47,11 @@ public TestController(){
             req.setAttribute("message", req.getSession().getAttribute("message"));
 
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/test-list.jsp");
-            requestDispatcher.forward(req, resp);
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
         }
         }
         if (type.equals("student")){
@@ -55,7 +62,11 @@ public TestController(){
             req.setAttribute("message", req.getSession().getAttribute("message"));
 
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/test-list.jsp");
-            requestDispatcher.forward(req, resp);
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -68,9 +79,24 @@ public TestController(){
             e.printStackTrace();
         }
         String name = req.getParameter("name");
-        Integer complexity = Integer.parseInt(req.getParameter("complexity"));
-        Integer timeForTest = Integer.parseInt(req.getParameter("timeForTest"));
-        Integer topic = Integer.parseInt(req.getParameter("topic"));
+        Integer complexity = null;
+        try {
+            complexity = Integer.parseInt(req.getParameter("complexity"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        Integer timeForTest = null;
+        try {
+            timeForTest = Integer.parseInt(req.getParameter("timeForTest"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        Integer topic = null;
+        try {
+            topic = Integer.parseInt(req.getParameter("topic"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
 
         Test test = new Test();
         test.setName(name);

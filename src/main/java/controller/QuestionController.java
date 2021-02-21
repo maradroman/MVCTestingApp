@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @WebServlet("/questions")
 public class QuestionController extends HttpServlet {
@@ -25,21 +26,44 @@ public class QuestionController extends HttpServlet {
 
         if (type.equals("admin")){
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/question-add.jsp");
-        requestDispatcher.forward(req,resp);}
+            try {
+                requestDispatcher.forward(req,resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         else {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
-            requestDispatcher.forward(req,resp);}
+            try {
+                requestDispatcher.forward(req,resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
+        try {
+            req.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         String option1IsCorrect ="false";
         String option2IsCorrect ="false";
         String option3IsCorrect ="false";
         String option4IsCorrect ="false";
 
-        Integer testID = Integer.parseInt(req.getParameter("testID"));
+        Integer testID = null;
+        try {
+            testID = Integer.parseInt(req.getParameter("testID"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         String text = req.getParameter("text");
         String option1 = req.getParameter("option1");
         String option2 = req.getParameter("option2");
@@ -89,11 +113,6 @@ public class QuestionController extends HttpServlet {
         question.setOption2IsCorrect(option2IsCorrect);
         question.setOption3IsCorrect(option3IsCorrect);
         question.setOption4IsCorrect(option4IsCorrect);
-
-
-//        question.setOption2IsCorrect(option2IsCorrect);
-//        question.setOption3IsCorrect(option3IsCorrect);
-//        question.setOption4IsCorrect(option4IsCorrect);
 
         if (questionDAO.save(question)){
             req.setAttribute("message", "Question saved successfully");

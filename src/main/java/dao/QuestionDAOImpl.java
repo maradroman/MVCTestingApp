@@ -19,7 +19,7 @@ public class QuestionDAOImpl implements QuestionDAO {
         List<Question> list = null;
         Question question = null;
 
-        list = new ArrayList<Question>();
+        list = new ArrayList<>();
         String sql = "SELECT * FROM question WHERE test_id=" + testID;
         connection = DBConnectionUtil.openConnection();
 

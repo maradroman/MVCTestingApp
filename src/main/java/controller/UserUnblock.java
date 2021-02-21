@@ -37,9 +37,18 @@ public class UserUnblock extends HttpServlet {
             req.setAttribute("message", "User unblocked successfully");
         }
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
-        requestDispatcher.forward(req, resp);
-    }
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         else {RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
-        requestDispatcher.forward(req, resp);}
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
+        }
 }}

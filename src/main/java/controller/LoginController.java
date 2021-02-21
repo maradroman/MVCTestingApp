@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
@@ -24,13 +25,21 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/publicPages/login.jsp");
-        requestDispatcher.forward(req, resp);
+        try {
+            requestDispatcher.forward(req, resp);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setCharacterEncoding("UTF-8");
+        try {
+            req.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         HttpSession session = req.getSession();
         Login login = new Login();
         login.setUsername(req.getParameter("username"));
@@ -38,7 +47,11 @@ public class LoginController extends HttpServlet {
         Login authResult = loginDAO.authenticate(login);
         if (authResult != null){
             if (authResult.getIsBlocked().equals("true")){
-                resp.sendRedirect("login?status=blocked");
+                try {
+                    resp.sendRedirect("login?status=blocked");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 session.setAttribute("message", "Your account was blocked by administration");
             }else {
                 session.setAttribute("username", authResult.getUsername());
@@ -48,11 +61,19 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("name", authResult.getName());
                 session.setAttribute("surname", authResult.getSurname());
                 session.setAttribute("email", authResult.getEmail());
-                session.setAttribute("isBlocked", authResult);
-                resp.sendRedirect(req.getContextPath() + "/users");
+                session.setAttribute("isBlocked", authResult.getIsBlocked());
+                try {
+                    resp.sendRedirect(req.getContextPath() + "/users");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }else {
-           resp.sendRedirect("login?status=error");
+            try {
+                resp.sendRedirect("login?status=error");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     }

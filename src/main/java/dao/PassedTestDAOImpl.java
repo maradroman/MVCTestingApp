@@ -35,7 +35,7 @@ public class PassedTestDAOImpl implements PassedTestDAO {
         List<PassedTest> list = null;
         PassedTest passedTest = null;
 
-        list = new ArrayList<PassedTest>();
+        list = new ArrayList<>();
         String sql = "SELECT * from passed_tests where user_id=" + userID;
         connection = DBConnectionUtil.openConnection();
 
