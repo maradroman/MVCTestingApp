@@ -7,12 +7,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Online testing application</a>
             </div>
-<%--            <ul class="nav navbar-nav">--%>
-<%--                <li class="active"><a href="${pageContext.request.contextPath}/login">Sign In</a></li>--%>
-<%--                <li class="active"><a href="${pageContext.request.contextPath}/users?action=SIGNUP">Sign Up</a></li>--%>
 
-
-<%--            </ul>--%>
         </div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light rounded" aria-label="Eleventh navbar example">
             <div class="container-fluid">
@@ -29,6 +24,14 @@
                     </ul>
                 </div>
         </nav>
+        <%
+            if (session.getAttribute("message") != null){
+                out.print("<div class=\"alert alert-success\" role=\"alert\">\n" +
+                        session.getAttribute("message") +
+                        "</div>");
+            }
+            session.removeAttribute("message");
+        %>
     </nav>
 
 

@@ -27,9 +27,6 @@
                     <a class="nav-link" href="${pageContext.request.contextPath}/tests">Tests</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Results</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/logout.jsp">Logout</a>
                 </li>
             </ul>

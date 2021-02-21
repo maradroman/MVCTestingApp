@@ -1,9 +1,8 @@
         <%@ page contentType="text/html;charset=UTF-8" language="java" %>
         <html>
         <head>
-            <title>Add user</title>
+            <title>Login</title>
             <link href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
         </head>
 <body>
 <jsp:include page="header_public.jsp"/>
@@ -11,7 +10,6 @@
     <div class="card">
         <div class="card-body">
             <form action="${pageContext.request.contextPath}/login" method="post">
-
                 <div class="mb-3">
                     <label for="username" class="form-label" >Username</label>
                     <input minlength="3" maxlength="45" id="username" class="form-control" placeholder="username" type="text" name="username" value="${user.username}" required><br>
@@ -27,7 +25,6 @@
         </div>
     </div>
 </div>
-
     <div class="toast-header">
     </div>
     <div class="toast-body">
@@ -37,29 +34,9 @@
             if (username != null){
                 response.sendRedirect("tests");
             }
-        String status = request.getParameter("status");
-        if (status != null){
-
-            if (status.equals("invalidUserPass")){
-                out.print("Invalid user and/or password");
-            }
-            else{
-                out.print("Some error occurred, please try again later");
-                session.invalidate();
-            }
-        }
-
         %>
         </p>
     </div>
-
-
-
-
-
-
-
-
 </body>
 </html>
 

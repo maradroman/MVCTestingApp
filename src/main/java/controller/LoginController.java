@@ -37,15 +37,20 @@ public class LoginController extends HttpServlet {
         login.setPassword(req.getParameter("password"));
         Login authResult = loginDAO.authenticate(login);
         if (authResult != null){
-           session.setAttribute("username", authResult.getUsername());
-           session.setAttribute("userID", authResult.getId());
-           session.setAttribute("type", authResult.getType());
-           session.setAttribute("password", authResult.getPassword());
-           session.setAttribute("name", authResult.getName());
-           session.setAttribute("surname", authResult.getSurname());
-           session.setAttribute("email", authResult.getEmail());
-           session.setAttribute("isBlocked", authResult);
-           resp.sendRedirect(req.getContextPath() + "/users");
+            if (authResult.getIsBlocked().equals("true")){
+                resp.sendRedirect("login?status=blocked");
+                session.setAttribute("message", "Your account was blocked by administration");
+            }else {
+                session.setAttribute("username", authResult.getUsername());
+                session.setAttribute("userID", authResult.getId());
+                session.setAttribute("type", authResult.getType());
+                session.setAttribute("password", authResult.getPassword());
+                session.setAttribute("name", authResult.getName());
+                session.setAttribute("surname", authResult.getSurname());
+                session.setAttribute("email", authResult.getEmail());
+                session.setAttribute("isBlocked", authResult);
+                resp.sendRedirect(req.getContextPath() + "/users");
+            }
         }else {
            resp.sendRedirect("login?status=error");
         }

@@ -115,7 +115,7 @@ public class UserDAOImpl implements UserDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        System.out.println(user.toString());
+
         return user;
     }
 

@@ -42,6 +42,9 @@ public class UserController extends HttpServlet {
                 if (action.equals("EDIT")){
                     getSingleUser(req, resp);
                 }
+                if (action.equals("ADD")){
+                    addUser(req, resp);
+                }
 
 
         }
@@ -123,7 +126,13 @@ public class UserController extends HttpServlet {
             String surname = req.getParameter("surname");
             String email = req.getParameter("email");
             String password = req.getParameter("password");
-            Integer id = (Integer)session.getAttribute("userID");
+            Integer id = null;
+            if (session.getAttribute("type").equals("student")) {
+                id = (Integer) session.getAttribute("userID");
+            }
+            else if (session.getAttribute("type").equals("admin")) {
+                id = Integer.parseInt(req.getParameter("id"));
+            }
 
             User user = new User();
 
@@ -137,13 +146,14 @@ public class UserController extends HttpServlet {
             if (userDAO.update(user)){
                 session.setAttribute("message", "User updated successfully!");
                 req.setAttribute("page", "user");
-                session.setAttribute("username", user.getUsername());
 
-                session.setAttribute("password", user.getPassword());
-                session.setAttribute("name", user.getName());
-                session.setAttribute("surname", user.getSurname());
-                session.setAttribute("email", user.getEmail());
-
+               if (session.getAttribute("type").equals("student")) {
+                   session.setAttribute("username", user.getUsername());
+                   session.setAttribute("password", user.getPassword());
+                   session.setAttribute("name", user.getName());
+                   session.setAttribute("surname", user.getSurname());
+                   session.setAttribute("email", user.getEmail());
+               }
             }
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
             requestDispatcher.forward(req, resp);
@@ -156,7 +166,7 @@ public class UserController extends HttpServlet {
        String id = req.getParameter("id");
        User user = userDAO.getByID(Integer.parseInt(id));
        req.setAttribute("user", user);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/user-add.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/user-add.jsp");
         requestDispatcher.forward(req, resp);
 
 
@@ -164,6 +174,10 @@ public class UserController extends HttpServlet {
 
     public void signUpUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/publicPages/user-add.jsp");
+        requestDispatcher.forward(req, resp);
+    }
+    public void addUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/user-add.jsp");
         requestDispatcher.forward(req, resp);
     }
 }

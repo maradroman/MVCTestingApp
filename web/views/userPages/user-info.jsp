@@ -11,7 +11,7 @@
     }
 %>
 <head>
-    <title>Title</title>
+    <title>Student info</title>
     <link href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
