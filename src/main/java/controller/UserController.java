@@ -48,17 +48,23 @@ public class UserController extends HttpServlet {
 
         }
         if (type.equals("student")){
-            String id = session.getAttribute("userID").toString();
-            User user = userDAO.getByID(Integer.parseInt(id));
-            req.setAttribute("user", user);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/user-info.jsp");
-            requestDispatcher.forward(req, resp);
-
+            if (action == null) {
+                String id = session.getAttribute("userID").toString();
+                User user = userDAO.getByID(Integer.parseInt(id));
+                req.setAttribute("user", user);
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/user-info.jsp");
+                requestDispatcher.forward(req, resp);
+            }
+            else if (action.equals("EDIT")){
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/user-edit.jsp");
+                requestDispatcher.forward(req, resp);
+            }
         }
         }
+        if (action != null){
         if (action.equals("SIGNUP")){
             signUpUser(req, resp);
-        }
+        }}
     }
     public void listUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> list = userDAO.get();
@@ -71,39 +77,78 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        String username = req.getParameter("username");
-        String name = req.getParameter("name");
-        String surname = req.getParameter("surname");
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        String id = req.getParameter("id");
 
-        User user = new User();
-        if (!id.isEmpty()){
-            user.setId(Integer.parseInt(id));
+        HttpSession session = req.getSession();
+        if (session.getAttribute("userID") == null) {
+
+
+            String username = req.getParameter("username");
+            String name = req.getParameter("name");
+            String surname = req.getParameter("surname");
+            String email = req.getParameter("email");
+            String password = req.getParameter("password");
+            String id = req.getParameter("id");
+
+            User user = new User();
+            if (!id.isEmpty()) {
+                user.setId(Integer.parseInt(id));
+            }
+            user.setUsername(username);
+            user.setName(name);
+            user.setSurname(surname);
+            user.setEmail(email);
+            user.setPassword(password);
+
+            if (!id.isEmpty()) {
+                //save
+                if (userDAO.update(user)) {
+                    req.setAttribute("message", "User saved successfully!");
+                    req.setAttribute("page", "user");
+                }
+
+            } else {
+                //update
+                if (userDAO.save(user)) {
+                    req.setAttribute("message", "User updated successfully!");
+                    req.setAttribute("page", "user");
+                }
+            }
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
+            requestDispatcher.forward(req, resp);
         }
-        user.setUsername(username);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setEmail(email);
-        user.setPassword(password);
 
-        if (!id.isEmpty()){
-            //save
+        else {
+            String username = req.getParameter("username");
+            String name = req.getParameter("name");
+            String surname = req.getParameter("surname");
+            String email = req.getParameter("email");
+            String password = req.getParameter("password");
+            Integer id = (Integer)session.getAttribute("userID");
+
+            User user = new User();
+
+            user.setName(name);
+            user.setUsername(username);
+            user.setSurname(surname);
+            user.setEmail(email);
+            user.setPassword(password);
+            user.setId(id);
+
             if (userDAO.update(user)){
-                req.setAttribute("message", "User saved successfully!");
+                session.setAttribute("message", "User updated successfully!");
                 req.setAttribute("page", "user");
-            }
+                session.setAttribute("username", user.getUsername());
 
-        }else {
-            //update
-            if (userDAO.save(user)){
-                req.setAttribute("message", "User updated successfully!");
-                req.setAttribute("page", "user");
+                session.setAttribute("password", user.getPassword());
+                session.setAttribute("name", user.getName());
+                session.setAttribute("surname", user.getSurname());
+                session.setAttribute("email", user.getEmail());
+
             }
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
+            requestDispatcher.forward(req, resp);
         }
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
-        requestDispatcher.forward(req, resp);
+
     }
 
 

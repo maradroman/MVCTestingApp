@@ -49,7 +49,7 @@
                 <td>${user.surname}</td>
                 <td>${user.email}</td>
                 <td>${user.type}</td>
-                <td><a href="#">edit</a></td>
+                <td><a href="${pageContext.request.contextPath}/users?action=EDIT" class="btn btn-warning">edit</a></td>
             </tr>
 
 

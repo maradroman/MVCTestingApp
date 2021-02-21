@@ -22,7 +22,7 @@
 </head>
 <body>
 <div class="container pt-5">
-    <div style="position: sticky; top: 0; z-index: 2" class="card align-items-center bg-white mb-5">
+    <div style="position: sticky; top: 0; z-index: 2; width: 100%" class="card align-items-center bg-white mb-5">
         <h3>Time left:</h3>
         <div class="badge" style="font-size: 35px; margin-bottom: 20px" id="clock"></div>
         <button form="testForm" class="btn btn-warning align-self-end" style="width: 100%">Submit test</button>
@@ -31,8 +31,8 @@
 <form style="font-size: 16px; font-family: 'Montserrat'" method="post" id="testForm">
     <c:forEach varStatus="loop" items="${list}" var="question">
     <input type="hidden" name="questions" value="${question.id}">
-    <div class="container card question mb-5">
-        <strong class="card-header mb-2" id="${question.id}">
+    <div class="card question mb-5">
+        <strong class="card-header border-0 mb-2" id="${question.id}">
                    ${loop.index + 1}.
             ${question.text}
            </strong>

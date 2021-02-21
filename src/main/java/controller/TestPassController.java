@@ -75,7 +75,7 @@ public class TestPassController extends HttpServlet {
         passedTest.setTimeSpent(Math.toIntExact(testTime));
 
         if (passedTestDAO.save(passedTest)){
-            req.setAttribute("message", "Result saved successfully");
+            session.setAttribute("message", "Result saved successfully");
         }
 
         try {

@@ -27,6 +27,14 @@
             </ul>
         </div>
     </nav>
+            <%
+    if (session.getAttribute("message") != null){
+        out.print("<div class=\"alert alert-success\" role=\"alert\">\n" +
+                  session.getAttribute("message") +
+                "</div>");
+    }
+    session.removeAttribute("message");
+    %>
 </nav>
 
 

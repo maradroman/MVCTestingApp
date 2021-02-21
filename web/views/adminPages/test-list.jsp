@@ -35,8 +35,8 @@
 </div>
 <div class="container" style="padding-top: 10px; margin-bottom: 100px">
     <h1><span class="badge badge-secondary">Tests</span></h1>
-    <a href="${pageContext.request.contextPath}/logout.jsp" class="btn btn-outline-success " style="width: 200px; position: absolute; top: 10px; left: 15px" role="button" data-bs-toggle="button">Logout</a>
-    <a href="${pageContext.request.contextPath}/tests?action=add" class="btn btn-outline-success" style="width: 200px" role="button" data-bs-toggle="button">Add test</a>
+
+    <a href="${pageContext.request.contextPath}/tests?action=add" class="btn btn btn-warning mb-5" style="width: 200px" role="button" data-bs-toggle="button">Add test</a>
 
     <table id="datatable" class="table table-hover">
         <thead>
