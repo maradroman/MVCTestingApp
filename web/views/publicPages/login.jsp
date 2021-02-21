@@ -45,8 +45,10 @@
             }
             else{
                 out.print("Some error occurred, please try again later");
+                session.invalidate();
             }
         }
+
         %>
         </p>
     </div>

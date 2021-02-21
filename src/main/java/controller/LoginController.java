@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
@@ -45,7 +44,7 @@ public class LoginController extends HttpServlet {
            session.setAttribute("name", authResult.getName());
            session.setAttribute("surname", authResult.getSurname());
            session.setAttribute("email", authResult.getEmail());
-           session.setAttribute("isBlocked", authResult.getIsBlocked());
+           session.setAttribute("isBlocked", authResult);
            resp.sendRedirect(req.getContextPath() + "/users");
         }else {
            resp.sendRedirect("login?status=error");

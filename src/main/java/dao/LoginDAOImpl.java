@@ -12,17 +12,14 @@ public class LoginDAOImpl implements LoginDAO {
     @Override
     public Login authenticate(Login login) {
 
-
         String sql = "SELECT * FROM users where username=? and password=?";
-
         try {
             Connection connection = DBConnectionUtil.openConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,login.getUsername());
             preparedStatement.setString(2,login.getPassword());
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()){
+            if (resultSet.next()) {
                 login = new Login();
                 login.setId(resultSet.getInt("id"));
                 login.setUsername(resultSet.getString("username"));
@@ -33,11 +30,12 @@ public class LoginDAOImpl implements LoginDAO {
                 login.setType(resultSet.getString("type"));
                 login.setIsBlocked(resultSet.getString("isBlocked"));
             }
+            else {
+                login = null;
+            }
         } catch (SQLException throwables) {
             login = null;
         }
-
         return login;
     }
-
 }
