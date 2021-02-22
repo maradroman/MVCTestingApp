@@ -22,6 +22,8 @@
     String LocaleEmail = getResource(resource, "LocaleEmail");
     String LocaleSubmit = getResource(resource, "LocaleSubmit");
     String LocaleEditUser = getResource(resource, "LocaleEditUser");
+    String LocalePassword = getResource(resource, "LocalePassword");
+    String LocalePassDescription = getResource(resource, "LocalePassDescription");
 
 
 %>
@@ -57,11 +59,11 @@
             <label for="email" class="form-label"><%=LocaleEmail%></label>
         <input pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" maxlength="45" id="email" class="form-control" placeholder="<%=LocaleEmail%>" type="text" name="email" value="<%=session.getAttribute("email")%>" required><br>
         </div>
-<%--        <div class="mb-3">--%>
-<%--            <label for="password" class="form-label">Password*</label>--%>
-<%--        <input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" maxlength="45" minlength="8" id="password" class="form-control" placeholder="Password" value="<%=session.getAttribute("password")%>" type="password" name="password"><br>--%>
-<%--            <p class="text-info">*Minimum eight characters, at least one uppercase letter, one lowercase letter and one number</p>--%>
-<%--        </div>--%>
+        <div class="mb-3">
+            <label for="password" class="form-label"><%=LocalePassword%>*</label>
+        <input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" maxlength="45" minlength="8" id="password" class="form-control" placeholder="<%=LocalePassword%>" value="<%=session.getAttribute("password")%>" type="password" name="password"><br>
+            <p class="text-info">*<%=LocalePassDescription%></p>
+        </div>
         <input type="hidden" name="id">
         <button type="submit" class="btn btn-primary"><%=LocaleSubmit%></button>
     </form>

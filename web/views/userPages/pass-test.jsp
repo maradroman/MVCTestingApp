@@ -1,5 +1,21 @@
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.ResourceBundle" %>
+<%@ page import="java.io.UnsupportedEncodingException" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%!
+    public String getResource(ResourceBundle resourceBundle, String resName) throws UnsupportedEncodingException, UnsupportedEncodingException {
+        return new String(resourceBundle.getString(resName).getBytes("ISO-8859-1"), "UTF-8");
+    }
+%>
+
+<% Locale currentLocale = new Locale((String) session.getAttribute("language"), (String) session.getAttribute("country"));
+    ResourceBundle resource = ResourceBundle.getBundle("main", currentLocale);
+    String LocaleTestInProgress = getResource(resource, "LocaleTestInProgress");
+    String LocaleTimeLeft = getResource(resource, "LocaleTimeLeft");
+
+%>
 <html>
 <%
     String username = (String) session.getAttribute("username");
@@ -18,12 +34,12 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="//cdn.rawgit.com/hilios/jQuery.countdown/2.2.0/dist/jquery.countdown.min.js"></script>
-    <title>Test in progress</title>
+    <title><%=LocaleTestInProgress%></title>
 </head>
 <body>
 <div class="container pt-5">
     <div style="position: sticky; top: 0; z-index: 2; width: 100%" class="card align-items-center bg-white mb-5">
-        <h3>Time left:</h3>
+        <h3><%=LocaleTimeLeft%></h3>
         <div class="badge" style="font-size: 35px; margin-bottom: 20px" id="clock"></div>
         <button form="testForm" class="btn btn-warning align-self-end" style="width: 100%">Submit test</button>
     </div>

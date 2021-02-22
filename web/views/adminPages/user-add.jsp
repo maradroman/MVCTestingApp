@@ -21,6 +21,7 @@
     String LocaleSurname = getResource(resource, "LocaleSurname");
     String LocaleEmail = getResource(resource, "LocaleEmail");
     String LocaleSubmit = getResource(resource, "LocaleSubmit");
+    String LocalePassDescription = getResource(resource, "LocalePassDescription");
 
 
 %>
@@ -55,6 +56,11 @@
         <div class="mb-3">
             <label for="email" class="form-label"><%=LocaleEmail%></label>
         <input pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" maxlength="45" id="email" class="form-control" placeholder="<%=LocaleEmail%>" type="text" name="email" value="${user.email}" required><br>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label"><%=LocaleEmail%>*</label>
+            <input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" maxlength="45" minlength="8" id="password" class="form-control" placeholder="<%=LocaleEmail%>" type="password" name="password"><br>
+            <p class="text-info"><%=LocalePassDescription%></p>
         </div>
         <input type="hidden" name="id" value="${user.id}">
         <button type="submit" class="btn btn-primary"><%=LocaleSubmit%></button>
