@@ -23,6 +23,10 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        if (session.getAttribute("language") == null && session.getAttribute("country") == null){
+        session.setAttribute("language", "ua");
+        session.setAttribute("country", "UA");}
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/publicPages/login.jsp");
         try {

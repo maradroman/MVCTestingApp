@@ -1,13 +1,27 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: RyzenPC
-  Date: 09.02.2021
-  Time: 15:56
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.ResourceBundle" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.io.UnsupportedEncodingException" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"
          language="java"%>
+
+<%!
+    public String getResource(ResourceBundle resourceBundle, String resName) throws UnsupportedEncodingException, UnsupportedEncodingException {
+        return new String(resourceBundle.getString(resName).getBytes("ISO-8859-1"), "UTF-8");
+    }
+%>
+
+<% Locale currentLocale = new Locale((String) session.getAttribute("language"), (String) session.getAttribute("country"));
+    ResourceBundle resource = ResourceBundle.getBundle("main", currentLocale);
+    String LocaleAddTest = getResource(resource, "LocaleAddTest");
+    String LocaleTestName = getResource(resource, "LocaleTestName");
+    String LocaleComplexity = getResource(resource, "LocaleComplexity");
+    String LocaleTimeForTest = getResource(resource, "LocaleTimeForTest");
+    String LocaleTopic = getResource(resource, "LocaleTopic");
+    String LocaleSubmit = getResource(resource, "LocaleSubmit");
+
+%>
 <html>
 <%
 
@@ -19,7 +33,7 @@
     }
 %>
 <head>
-    <title>Add test</title>
+    <title><%=LocaleAddTest%></title>
     <link href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
@@ -32,31 +46,28 @@
     <form action="${pageContext.request.contextPath}/tests" method="post">
 
         <div class="mb-3">
-            <label for="name" class="form-label">Test name</label>
-        <input minlength="3" maxlength="45" id="name" class="form-control" placeholder="name" type="text" name="name" required><br>
+            <label for="name" class="form-label"><%=LocaleTestName%></label>
+        <input minlength="3" maxlength="45" id="name" class="form-control" placeholder="<%=LocaleTestName%>" type="text" name="name" required><br>
         </div>
 
 
-
-
-
         <div class="mb-3">
-            <label for="complexity" class="form-label">complexity</label>
+            <label for="complexity" class="form-label"><%=LocaleComplexity%></label>
         <input id="complexity" class="form-control-range"  type="range" name="complexity" min="1" max="10" step="1">
 1_____2_____3_____4_____5____6_____7_____8____9____10
         </div>
 
         <div class="mb-3">
-            <label for="timeForTest" class="form-label">timeForTest</label>
-        <input minlength="1" maxlength="10" id="timeForTest" class="form-control" placeholder="timeForTest" type="text" name="timeForTest" required><br>
+            <label for="timeForTest" class="form-label"><%=LocaleTimeForTest%></label>
+        <input minlength="1" maxlength="10" id="timeForTest" class="form-control" placeholder="<%=LocaleTimeForTest%>" type="text" name="timeForTest" required><br>
         </div>
 
         <div class="mb-3">
-            <label for="topic" class="form-label">topic</label>
-        <input minlength="1" maxlength="10" id="topic" class="form-control" placeholder="topic" type="text" name="topic" required><br>
+            <label for="topic" class="form-label"><%=LocaleTopic%></label>
+        <input minlength="1" maxlength="10" id="topic" class="form-control" placeholder="<%=LocaleTopic%>" type="text" name="topic" required><br>
         </div>
 
-        <button type="submit" class="btn btn-primary">submit</button>
+        <button type="submit" class="btn btn-primary"><%=LocaleSubmit%></button>
     </form>
     </div>
 

@@ -3,9 +3,7 @@
          language="java"%>
 <html>
 <%
-
     String username = (String) session.getAttribute("username");
-
     System.out.println(session.getAttribute("userID"));
     if (username == null){
         response.sendRedirect("login");
