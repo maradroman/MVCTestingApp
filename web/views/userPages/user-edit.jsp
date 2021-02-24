@@ -61,7 +61,7 @@
         <input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" maxlength="45" minlength="8" id="password" class="form-control" placeholder="Password" value="<%=session.getAttribute("password")%>" type="password" name="password"><br>
             <p class="text-info">*Minimum eight characters, at least one uppercase letter, one lowercase letter and one number</p>
         </div>
-        <input type="hidden" name="id">
+        <input type="hidden" name="id" value="<%=session.getAttribute("userID")%>">
         <button type="submit" class="btn btn-primary"><%=LocaleSubmit%></button>
     </form>
     </div>

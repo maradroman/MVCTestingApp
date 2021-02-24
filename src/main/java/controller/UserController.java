@@ -120,7 +120,7 @@ public class UserController extends HttpServlet {
         }
 
         HttpSession session = req.getSession();
-        if (session.getAttribute("userID") == null) {
+//        if (session.getAttribute("userID") == null) {
 
 
             String username = req.getParameter("username");
@@ -164,54 +164,55 @@ public class UserController extends HttpServlet {
             } catch (ServletException | IOException e) {
                 e.printStackTrace();
             }
-        }
+//        }
 
-        else {
-            String username = req.getParameter("username");
-            String name = req.getParameter("name");
-            String surname = req.getParameter("surname");
-            String email = req.getParameter("email");
-            String password = req.getParameter("password");
-            Integer id = null;
-            if (session.getAttribute("type").equals("student")) {
-                id = (Integer) session.getAttribute("userID");
-            }
-            else if (session.getAttribute("type").equals("admin")) {
-                try {
-                    id = Integer.parseInt(req.getParameter("id"));
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            User user = new User();
-
-            user.setName(name);
-            user.setUsername(username);
-            user.setSurname(surname);
-            user.setEmail(email);
-            user.setPassword(password);
-            user.setId(id);
-
-            if (userDAO.update(user)){
-                session.setAttribute("message", "User updated successfully!");
-                req.setAttribute("page", "user");
-
-               if (session.getAttribute("type").equals("student")) {
-                   session.setAttribute("username", user.getUsername());
-                   session.setAttribute("password", user.getPassword());
-                   session.setAttribute("name", user.getName());
-                   session.setAttribute("surname", user.getSurname());
-                   session.setAttribute("email", user.getEmail());
-               }
-            }
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
-            try {
-                requestDispatcher.forward(req, resp);
-            } catch (ServletException | IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        else {
+//            String username = req.getParameter("username");
+//            String name = req.getParameter("name");
+//            String surname = req.getParameter("surname");
+//            String email = req.getParameter("email");
+//            String password = req.getParameter("password");
+//            Integer id = null;
+//            if (session.getAttribute("type").equals("student")) {
+//                id = (Integer) session.getAttribute("userID");
+//            }
+//            else if (session.getAttribute("type").equals("admin")) {
+//                try {
+//                    if (!req.getParameter("id").isEmpty()){
+//                    id = Integer.parseInt(req.getParameter("id"));}
+//                } catch (NumberFormatException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            User user = new User();
+//
+//            user.setName(name);
+//            user.setUsername(username);
+//            user.setSurname(surname);
+//            user.setEmail(email);
+//            user.setPassword(password);
+//            user.setId(id);
+//
+//            if (userDAO.update(user)){
+//                session.setAttribute("message", "User updated successfully!");
+//                req.setAttribute("page", "user");
+//
+//               if (session.getAttribute("type").equals("student")) {
+//                   session.setAttribute("username", user.getUsername());
+//                   session.setAttribute("password", user.getPassword());
+//                   session.setAttribute("name", user.getName());
+//                   session.setAttribute("surname", user.getSurname());
+//                   session.setAttribute("email", user.getEmail());
+//               }
+//            }
+//            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
+//            try {
+//                requestDispatcher.forward(req, resp);
+//            } catch (ServletException | IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
     }
 

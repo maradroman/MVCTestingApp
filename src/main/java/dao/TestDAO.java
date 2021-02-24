@@ -9,4 +9,5 @@ public interface TestDAO {
     Test get(int id);
     boolean save(Test test);
     boolean delete(Test test);
+    void addNumberOfRequests(String testID);
 }

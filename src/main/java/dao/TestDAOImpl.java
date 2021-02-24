@@ -9,10 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestDAOImpl implements TestDAO {
+
+
     Connection connection = null;
     Statement statement = null;
     ResultSet resultSet = null;
     PreparedStatement preparedStatement = null;
+
+    @Override
+    public void addNumberOfRequests(String testID) {
+        String sql = "UPDATE final_project.tests SET number_of_requests = number_of_requests + 1 where id = " + testID;
+        try {
+            connection = DBConnectionUtil.openConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
 
 
     public List<Test> get() {
@@ -94,4 +109,5 @@ public class TestDAOImpl implements TestDAO {
         boolean flag = false;
         return flag;
     }
+
 }

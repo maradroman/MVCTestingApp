@@ -21,6 +21,7 @@ public class TestPassController extends HttpServlet {
     QuestionDAO questionDAO = new QuestionDAOImpl();
     TestPassDAO testPassDAO = new TestPassDAOImpl();
     PassedTestDAO passedTestDAO = new PassedTestDAOImpl();
+    TestDAO testDAO = new TestDAOImpl();
     TestPass testPass;
     PassedTest passedTest;
     Long testStart = null;
@@ -40,8 +41,6 @@ public class TestPassController extends HttpServlet {
         HttpSession session = req.getSession();
         testEnd = System.currentTimeMillis();
         testTime = (testEnd - testStart)/1000;
-
-
 
         String[] questions = req.getParameterValues("questions");
         for (String question: questions
@@ -88,6 +87,7 @@ public class TestPassController extends HttpServlet {
 
         if (passedTestDAO.save(passedTest)){
             session.setAttribute("message", "Result saved successfully");
+            testDAO.addNumberOfRequests(testID);
         }
 
         try {

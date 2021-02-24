@@ -50,7 +50,7 @@
             <th><%=LocaleComplexity%></th>
             <th><%=LocaleNumberOfRequests%></th>
             <th><%=LocaleTimeForTest%></th>
-            <th><%=LocaleTopic%></th>
+<%--            <th><%=LocaleTopic%></th>--%>
             <th><%=LocaleQuestion%></th>
             <th><%=LocaleAddQuestion%></th>
         </tr>
@@ -63,7 +63,7 @@
                     <td>${test.complexity}</td>
                     <td>${test.numberOfRequests}</td>
                     <td>${test.timeForTest}</td>
-                    <td>${test.topic}</td>
+<%--                    <td>${test.topic}</td>--%>
                     <td>${test.questions.size()}</td>
                     <td>
                         <c:set scope="request" var="flag" value="false"/>

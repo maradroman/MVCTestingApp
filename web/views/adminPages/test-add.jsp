@@ -59,7 +59,7 @@
 
         <div class="mb-3">
             <label for="timeForTest" class="form-label"><%=LocaleTimeForTest%></label>
-        <input minlength="1" maxlength="10" id="timeForTest" class="form-control" placeholder="<%=LocaleTimeForTest%>" type="text" name="timeForTest" required><br>
+        <input minlength="1" pattern="[0-9]*" maxlength="10" id="timeForTest" class="form-control" placeholder="<%=LocaleTimeForTest%>" type="text" name="timeForTest" required><br>
         </div>
 
         <div class="mb-3">

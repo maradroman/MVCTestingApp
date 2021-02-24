@@ -61,7 +61,7 @@
         </div>
         <div class="mb-3">
             <label for="password" class="form-label"><%=LocalePassword%>*</label>
-        <input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" maxlength="45" minlength="8" id="password" class="form-control" placeholder="<%=LocalePassword%>" value="<%=session.getAttribute("password")%>" type="password" name="password"><br>
+        <input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" maxlength="45" minlength="8" id="password" class="form-control" placeholder="<%=LocalePassword%>" value="<%=session.getAttribute("password")%>" type="password" name="password" required><br>
             <p class="text-info">*<%=LocalePassDescription%></p>
         </div>
         <input type="hidden" name="id">
