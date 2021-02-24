@@ -31,7 +31,7 @@ public class TestDAOImpl implements TestDAO {
 
 
     public List<Test> get() {
-        List <Test> list = null;
+        List<Test> list = null;
         Test test = null;
 
         list = new ArrayList<>();
@@ -42,7 +42,7 @@ public class TestDAOImpl implements TestDAO {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 QuestionDAO questionDAO = new QuestionDAOImpl();
                 List<Question> questionsList = questionDAO.get(resultSet.getInt("id"));
 
@@ -73,7 +73,7 @@ public class TestDAOImpl implements TestDAO {
             connection = DBConnectionUtil.openConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 test = new Test();
                 test.setId(resultSet.getInt("id"));
                 test.setName(resultSet.getString("name"));
@@ -93,7 +93,7 @@ public class TestDAOImpl implements TestDAO {
         boolean flag = false;
 
         try {
-            String sql = "INSERT INTO tests(name, complexity, time_for_test, topic) VALUES('" + test.getName() + "','"+ test.getComplexity() + "','"+ test.getTimeForTest() + "','"+ test.getTopic() + "')";
+            String sql = "INSERT INTO tests(name, complexity, time_for_test, topic) VALUES('" + test.getName() + "','" + test.getComplexity() + "','" + test.getTimeForTest() + "','" + test.getTopic() + "')";
             connection = DBConnectionUtil.openConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.executeUpdate();
@@ -105,8 +105,38 @@ public class TestDAOImpl implements TestDAO {
     }
 
     @Override
-    public boolean delete(Test test) {
+    public boolean update(Test test) {
         boolean flag = false;
+        String sql = "UPDATE tests SET name='" + test.getName() + "',complexity='" + test.getComplexity() + "',time_for_test='" + test.getTimeForTest() + "',topic='" + test.getTopic() + "' where id=" + test.getId();
+
+        try {
+            connection = DBConnectionUtil.openConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+            flag = true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        return flag;
+    }
+
+    @Override
+    public boolean delete(String testID) {
+        boolean flag = false;
+        String sql = "DELETE FROM tests where id=" + testID;
+
+        try {
+            connection = DBConnectionUtil.openConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+            flag = true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
         return flag;
     }
 

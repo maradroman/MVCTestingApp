@@ -1,10 +1,10 @@
-<%@ page import="java.util.Locale" %>
 <%@ page import="java.io.UnsupportedEncodingException" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="java.util.ResourceBundle" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"
-         language="java"%>
+         language="java" %>
 
 <%!
     public String getResource(ResourceBundle resourceBundle, String resName) throws UnsupportedEncodingException, UnsupportedEncodingException {
@@ -32,53 +32,76 @@
 <%
     String username = (String) session.getAttribute("username");
     System.out.println(session.getAttribute("userID"));
-    if (username == null){
+    if (username == null) {
         response.sendRedirect("login");
     }
 %>
 <head>
-    <title><%=LocaleUsers%></title>
+    <title><%=LocaleUsers%>
+    </title>
     <link href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <jsp:include page="header_admin.jsp"/>
 <div class="container" style="padding-top: 10px">
-    <h3><%=LocaleUsers%></h3>
+    <h3><%=LocaleUsers%>
+    </h3>
     <table class="table table-hover">
         <tr class="thead-light">
-            <th><%=LocaleUsername%></th>
-            <th><%=LocaleName%></th>
-            <th><%=LocaleSurname%></th>
-            <th><%=LocaleEmail%></th>
-            <th><%=LocaleType%></th>
-            <th><%=LocaleActions%></th>
+            <th><%=LocaleUsername%>
+            </th>
+            <th><%=LocaleName%>
+            </th>
+            <th><%=LocaleSurname%>
+            </th>
+            <th><%=LocaleEmail%>
+            </th>
+            <th><%=LocaleType%>
+            </th>
+            <th><%=LocaleActions%>
+            </th>
         </tr>
-            <c:forEach items="${list}" var="user">
-                <tr>
+        <c:forEach items="${list}" var="user">
+            <tr>
                 <td>${user.username}</td>
                 <td>${user.name}</td>
                 <td>${user.surname}</td>
                 <td>${user.email}</td>
                 <td>${user.type}</td>
-                    <c:if test="${user.isBlocked eq 'false' && user.type eq 'student'}">
-                        <td>
-                            <a href="${pageContext.request.contextPath}/users/block?userName=${user.username}" class="btn btn-warning" style="width: 150px" role="button" data-bs-toggle="button"><%=LocaleBlockUser%></a>
-                            <a href="${pageContext.request.contextPath}/users?action=EDIT&id=${user.id}" class="btn btn-warning" style="" role="button" data-bs-toggle="button"><%=LocaleEdit%></a>
-                        </td>
-                    </c:if>
-                    <c:if test="${user.isBlocked eq 'true' && user.type eq 'student'}">
-                        <td>
-                            <a href="${pageContext.request.contextPath}/users/unblock?userName=${user.username}" class="btn btn-info" style="width: 150px" role="button" data-bs-toggle="button"><%=LocaleUnblock%></a>
-                            <a href="${pageContext.request.contextPath}/users?action=EDIT&id=${user.id}" class="btn btn-warning" style="" role="button" data-bs-toggle="button"><%=LocaleEdit%></a>
-                        </td>
-                    </c:if>
-                    <c:if test="${user.type eq 'admin'}">
-                        <td></td>
-                    </c:if>
-                </tr>
+                <c:if test="${user.isBlocked eq 'false' && user.type eq 'student'}">
+                    <td>
+                        <a href="${pageContext.request.contextPath}/users/block?userName=${user.username}"
+                           class="btn btn-warning" style="width: 150px" role="button"
+                           data-bs-toggle="button"><%=LocaleBlockUser%>
+                        </a>
+                        <a href="${pageContext.request.contextPath}/users?action=EDIT&id=${user.id}"
+                           class="btn btn-warning" style="" role="button" data-bs-toggle="button"><%=LocaleEdit%>
+                        </a>
+                        <a href="${pageContext.request.contextPath}/delete?action=user&id=${user.id}"
+                           class="btn btn-warning" style="" role="button" data-bs-toggle="button">delete user
+                        </a>
+                    </td>
+                </c:if>
+                <c:if test="${user.isBlocked eq 'true' && user.type eq 'student'}">
+                    <td>
+                        <a href="${pageContext.request.contextPath}/users/unblock?userName=${user.username}"
+                           class="btn btn-info" style="width: 150px" role="button"
+                           data-bs-toggle="button"><%=LocaleUnblock%>
+                        </a>
+                        <a href="${pageContext.request.contextPath}/users?action=EDIT&id=${user.id}"
+                           class="btn btn-warning" style="" role="button" data-bs-toggle="button"><%=LocaleEdit%>
+                        </a>
+                    </td>
+                </c:if>
+                <c:if test="${user.type eq 'admin'}">
+                    <td></td>
+                </c:if>
+            </tr>
         </c:forEach>
     </table>
-    <a href="${pageContext.request.contextPath}/users?action=ADD" class="btn btn-warning" style="" role="button" data-bs-toggle="button"><%=LocaleAddUser%></a>
+    <a href="${pageContext.request.contextPath}/users?action=ADD" class="btn btn-warning" style="" role="button"
+       data-bs-toggle="button"><%=LocaleAddUser%>
+    </a>
 </div>
 </body>
 </html>

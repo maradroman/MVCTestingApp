@@ -1,6 +1,6 @@
+<%@ page import="java.io.UnsupportedEncodingException" %>
 <%@ page import="java.util.Locale" %>
 <%@ page import="java.util.ResourceBundle" %>
-<%@ page import="java.io.UnsupportedEncodingException" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -20,7 +20,7 @@
 <%
     String username = (String) session.getAttribute("username");
     System.out.println(session.getAttribute("userID"));
-    if (username == null){
+    if (username == null) {
         response.sendRedirect("login");
     }
     request.setAttribute("testID", request.getParameter("testID"));
@@ -34,56 +34,65 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="//cdn.rawgit.com/hilios/jQuery.countdown/2.2.0/dist/jquery.countdown.min.js"></script>
-    <title><%=LocaleTestInProgress%></title>
+    <title><%=LocaleTestInProgress%>
+    </title>
 </head>
 <body>
 <div class="container pt-5">
     <div style="position: sticky; top: 0; z-index: 2; width: 100%" class="card align-items-center bg-white mb-5">
-        <h3><%=LocaleTimeLeft%></h3>
+        <h3><%=LocaleTimeLeft%>
+        </h3>
         <div class="badge" style="font-size: 35px; margin-bottom: 20px" id="clock"></div>
         <button form="testForm" class="btn btn-warning align-self-end" style="width: 100%">Submit test</button>
     </div>
 
-<form style="font-size: 16px; font-family: 'Montserrat'" method="post" id="testForm">
-    <c:forEach varStatus="loop" items="${list}" var="question">
-    <input type="hidden" name="questions" value="${question.id}">
-    <div class="card question mb-5">
-        <strong class="card-header border-0 mb-2" id="${question.id}">
-                   ${loop.index + 1}.
-            ${question.text}
-           </strong>
-        <div class="form-check d-flex align-items-center mb-2">
-            <input class="form-check-input position-static mt-0 mr-2" value="true" type="checkbox" name="${question.id}1">
-            ${question.option1}
-        </div>
+    <form style="font-size: 16px; font-family: 'Montserrat'" method="post" id="testForm">
+        <c:forEach varStatus="loop" items="${list}" var="question">
+            <input type="hidden" name="questions" value="${question.id}">
+            <div class="card question mb-5">
+                <strong class="card-header border-0 mb-2" id="${question.id}">
+                        ${loop.index + 1}.
+                        ${question.text}
+                </strong>
+                <div class="form-check d-flex align-items-center mb-2">
+                    <input class="form-check-input position-static mt-0 mr-2" value="true" type="checkbox"
+                           name="${question.id}1">
+                        ${question.option1}
+                </div>
 
-        <div class="form-check d-flex align-items-center mb-2">
-            <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true" name="${question.id}2">
-            ${question.option2}
-        </div>
+                <div class="form-check d-flex align-items-center mb-2">
+                    <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true"
+                           name="${question.id}2">
+                        ${question.option2}
+                </div>
 
-        <div class="form-check d-flex align-items-center mb-2">
-            <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true"  name="${question.id}3">
-            ${question.option3}
-        </div>
+                <div class="form-check d-flex align-items-center mb-2">
+                    <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true"
+                           name="${question.id}3">
+                        ${question.option3}
+                </div>
 
-        <div class="form-check d-flex align-items-center mb-2">
-            <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true"  name="${question.id}4">
-            ${question.option4}
-        </div>
-    </div>
+                <div class="form-check d-flex align-items-center mb-2">
+                    <input class="form-check-input position-static mt-0 mr-2" type="checkbox" value="true"
+                           name="${question.id}4">
+                        ${question.option4}
+                </div>
+            </div>
 
-    </c:forEach>
-</form>
+        </c:forEach>
+    </form>
 </div>
 
 <script type="text/javascript">
-    const testTimeMs = <%
-    if (request.getParameter("time")!=null){
-        out.print(Integer.parseInt(request.getParameter("time")));
-    }else {out.print(10);}%> * 60;
+    const testTimeMs =
+    <%
+       if (request.getParameter("time")!=null){
+           out.print(Integer.parseInt(request.getParameter("time")));
+       }else {out.print(10);}%> *
+    60;
     const timerBlock = document.querySelector('#clock');
-    function timer (seconds, tick, result) {
+
+    function timer(seconds, tick, result) {
         if (seconds > 0) {
             tick(seconds);
             seconds -= 1;

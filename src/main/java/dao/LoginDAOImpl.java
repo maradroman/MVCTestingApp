@@ -16,8 +16,8 @@ public class LoginDAOImpl implements LoginDAO {
         try {
             Connection connection = DBConnectionUtil.openConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,login.getUsername());
-            preparedStatement.setString(2,login.getPassword());
+            preparedStatement.setString(1, login.getUsername());
+            preparedStatement.setString(2, login.getPassword());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 login = new Login();
@@ -29,8 +29,7 @@ public class LoginDAOImpl implements LoginDAO {
                 login.setPassword(resultSet.getString("password"));
                 login.setType(resultSet.getString("type"));
                 login.setIsBlocked(resultSet.getString("isBlocked"));
-            }
-            else {
+            } else {
                 login = null;
             }
         } catch (SQLException throwables) {

@@ -25,7 +25,7 @@
     <title>Redirecting</title>
 </head>
 <body>
-<%
+    <%
 if (request.getSession().getAttribute("type") == null){
 response.sendRedirect("login");
 }
@@ -41,12 +41,18 @@ else if (request.getSession().getAttribute("type").equals("admin")){
 Please wait for redirection or: <br>
 
 <div class="container" style="width: 450px; padding-top: 70px">
-    <a href="${pageContext.request.contextPath}/users?action=LIST" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">users</a>
-    <a href="${pageContext.request.contextPath}/views/publicPages/user-add.jsp" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">users</a>
-    <a href="${pageContext.request.contextPath}/tests" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">tests</a>
-    <a href="${pageContext.request.contextPath}/tests?action=add" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">test-add</a>
-    <a href="${pageContext.request.contextPath}/questions" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">question-add</a>
-    <a href="${pageContext.request.contextPath}/login" class="btn btn-info btn-block" style="width: 200px" role="button" data-bs-toggle="button">login</a>
+    <a href="${pageContext.request.contextPath}/users?action=LIST" class="btn btn-info btn-block" style="width: 200px"
+       role="button" data-bs-toggle="button">users</a>
+    <a href="${pageContext.request.contextPath}/views/publicPages/user-add.jsp" class="btn btn-info btn-block"
+       style="width: 200px" role="button" data-bs-toggle="button">users</a>
+    <a href="${pageContext.request.contextPath}/tests" class="btn btn-info btn-block" style="width: 200px" role="button"
+       data-bs-toggle="button">tests</a>
+    <a href="${pageContext.request.contextPath}/tests?action=add" class="btn btn-info btn-block" style="width: 200px"
+       role="button" data-bs-toggle="button">test-add</a>
+    <a href="${pageContext.request.contextPath}/questions" class="btn btn-info btn-block" style="width: 200px"
+       role="button" data-bs-toggle="button">question-add</a>
+    <a href="${pageContext.request.contextPath}/login" class="btn btn-info btn-block" style="width: 200px" role="button"
+       data-bs-toggle="button">login</a>
 </div>
 
 <%--<div class="container">--%>
@@ -56,7 +62,6 @@ Please wait for redirection or: <br>
 <%--                <h3>Time left:</h3>--%>
 <%--                <div class="badge" style="font-size: 35px; margin-bottom: 20px" id="clock"></div>--%>
 <%--        <button type="submit" form="form" class="btn btn-warning align-self-end" style="width: 100%">Submit test</button>--%>
-
 
 
 <%--    </div>--%>

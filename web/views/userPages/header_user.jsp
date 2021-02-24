@@ -1,6 +1,6 @@
-<%@ page import="java.util.ResourceBundle" %>
-<%@ page import="java.util.Locale" %>
 <%@ page import="java.io.UnsupportedEncodingException" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.ResourceBundle" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -35,41 +35,47 @@
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/users"><%=LocaleStudentInfo%></a>
+                    <a class="nav-link active" aria-current="page"
+                       href="${pageContext.request.contextPath}/users"><%=LocaleStudentInfo%>
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/tests"><%=LocaleTests%></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/tests"><%=LocaleTests%>
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/logout.jsp"><%=LocaleLogout%></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/logout.jsp"><%=LocaleLogout%>
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <p>      </p>
+                    <p></p>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link btn btn-light ml-5 pl-3 pr-3" href="${pageContext.request.contextPath}/langSwitch?lang=en">en</a>
+                    <a class="nav-link btn btn-light ml-5 pl-3 pr-3"
+                       href="${pageContext.request.contextPath}/langSwitch?lang=en">en</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link btn btn-light ml-1 pl-3 pr-3" href="${pageContext.request.contextPath}/langSwitch?lang=ua">ua</a>
+                    <a class="nav-link btn btn-light ml-1 pl-3 pr-3"
+                       href="${pageContext.request.contextPath}/langSwitch?lang=ua">ua</a>
                 </li>
             </ul>
         </div>
     </nav>
     <%
-    if (session.getAttribute("message") != null){
-        out.print("<div class=\"alert alert-success\" role=\"alert\">\n" +
-                  session.getAttribute("message") +
-                "</div>");
-    }
-    session.removeAttribute("message");
+        if (session.getAttribute("message") != null) {
+            out.print("<div class=\"alert alert-success\" role=\"alert\">\n" +
+                    session.getAttribute("message") +
+                    "</div>");
+        }
+        session.removeAttribute("message");
     %>
 
-<%--    test saved successfully--%>
+    <%--    test saved successfully--%>
 </nav>
 
 

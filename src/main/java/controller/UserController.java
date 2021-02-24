@@ -2,9 +2,7 @@ package controller;
 
 import dao.UserDAO;
 import dao.UserDAOImpl;
-
 import entity.User;
-
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,9 +19,9 @@ import java.util.List;
 public class UserController extends HttpServlet {
     UserDAO userDAO = null;
 
-   public UserController(){
-       userDAO = new UserDAOImpl();
-   }
+    public UserController() {
+        userDAO = new UserDAOImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,78 +29,79 @@ public class UserController extends HttpServlet {
         HttpSession session = req.getSession();
         String action = req.getParameter("action");
         String type = (String) session.getAttribute("type");
-        if (type != null){
+        if (type != null) {
 
-        if (type.equals("admin")){
-            if (action == null) {
-                try {
-                    listUsers(req, resp);
-                } catch (ServletException | IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                if (action.equals("LIST")) {
+            if (type.equals("admin")) {
+                if (action == null) {
                     try {
                         listUsers(req, resp);
                     } catch (ServletException | IOException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    if (action.equals("LIST")) {
+                        try {
+                            listUsers(req, resp);
+                        } catch (ServletException | IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (action.equals("EDIT")) {
+                        try {
+                            getSingleUser(req, resp);
+                        } catch (ServletException | IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (action.equals("ADD")) {
+                        try {
+                            addUser(req, resp);
+                        } catch (ServletException | IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+
                 }
-                if (action.equals("EDIT")){
+
+            }
+            if (type.equals("student")) {
+                if (action == null) {
+                    String id = session.getAttribute("userID").toString();
+                    User user = null;
                     try {
-                        getSingleUser(req, resp);
+                        user = userDAO.getByID(Integer.parseInt(id));
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                    req.setAttribute("user", user);
+                    RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/user-info.jsp");
+                    try {
+                        requestDispatcher.forward(req, resp);
+                    } catch (ServletException | IOException e) {
+                        e.printStackTrace();
+                    }
+                } else if (action.equals("EDIT")) {
+                    RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/user-edit.jsp");
+                    try {
+                        requestDispatcher.forward(req, resp);
                     } catch (ServletException | IOException e) {
                         e.printStackTrace();
                     }
                 }
-                if (action.equals("ADD")){
-                    try {
-                        addUser(req, resp);
-                    } catch (ServletException | IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-
-        }
-
-        }
-        if (type.equals("student")){
-            if (action == null) {
-                String id = session.getAttribute("userID").toString();
-                User user = null;
-                try {
-                    user = userDAO.getByID(Integer.parseInt(id));
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-                req.setAttribute("user", user);
-                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/user-info.jsp");
-                try {
-                    requestDispatcher.forward(req, resp);
-                } catch (ServletException | IOException e) {
-                    e.printStackTrace();
-                }
             }
-            else if (action.equals("EDIT")){
-                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/user-edit.jsp");
+        }
+        if (action != null) {
+            if (action.equals("SIGNUP")) {
                 try {
-                    requestDispatcher.forward(req, resp);
+                    signUpUser(req, resp);
                 } catch (ServletException | IOException e) {
                     e.printStackTrace();
                 }
             }
         }
-        }
-        if (action != null){
-        if (action.equals("SIGNUP")){
-            try {
-                signUpUser(req, resp);
-            } catch (ServletException | IOException e) {
-                e.printStackTrace();
-            }
-        }}
     }
+
     public void listUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> list = userDAO.get();
         req.setAttribute("list", list);
@@ -111,6 +110,7 @@ public class UserController extends HttpServlet {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/user-list.jsp");
         requestDispatcher.forward(req, resp);
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -123,47 +123,47 @@ public class UserController extends HttpServlet {
 //        if (session.getAttribute("userID") == null) {
 
 
-            String username = req.getParameter("username");
-            String name = req.getParameter("name");
-            String surname = req.getParameter("surname");
-            String email = req.getParameter("email");
-            String password = req.getParameter("password");
-            String id = req.getParameter("id");
+        String username = req.getParameter("username");
+        String name = req.getParameter("name");
+        String surname = req.getParameter("surname");
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        String id = req.getParameter("id");
 
-            User user = new User();
-            if (!id.isEmpty()) {
-                try {
-                    user.setId(Integer.parseInt(id));
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-            }
-            user.setUsername(username);
-            user.setName(name);
-            user.setSurname(surname);
-            user.setEmail(email);
-            user.setPassword(password);
-
-            if (!id.isEmpty()) {
-                //save
-                if (userDAO.update(user)) {
-                    req.setAttribute("message", "User saved successfully!");
-                    req.setAttribute("page", "user");
-                }
-
-            } else {
-                //update
-                if (userDAO.save(user)) {
-                    req.setAttribute("message", "User updated successfully!");
-                    req.setAttribute("page", "user");
-                }
-            }
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
+        User user = new User();
+        if (!id.isEmpty()) {
             try {
-                requestDispatcher.forward(req, resp);
-            } catch (ServletException | IOException e) {
+                user.setId(Integer.parseInt(id));
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
+        }
+        user.setUsername(username);
+        user.setName(name);
+        user.setSurname(surname);
+        user.setEmail(email);
+        user.setPassword(password);
+
+        if (!id.isEmpty()) {
+            //save
+            if (userDAO.update(user)) {
+                req.setAttribute("message", "User saved successfully!");
+                req.setAttribute("page", "user");
+            }
+
+        } else {
+            //update
+            if (userDAO.save(user)) {
+                req.setAttribute("message", "User updated successfully!");
+                req.setAttribute("page", "user");
+            }
+        }
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
+        try {
+            requestDispatcher.forward(req, resp);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
 //        }
 
 //        else {
@@ -218,20 +218,21 @@ public class UserController extends HttpServlet {
 
 
     public void getSingleUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       String id = req.getParameter("id");
-       User user = userDAO.getByID(Integer.parseInt(id));
-       req.setAttribute("user", user);
+        String id = req.getParameter("id");
+        User user = userDAO.getByID(Integer.parseInt(id));
+        req.setAttribute("user", user);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/user-add.jsp");
         requestDispatcher.forward(req, resp);
 
 
     }
 
-    public void signUpUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    public void signUpUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/publicPages/user-add.jsp");
         requestDispatcher.forward(req, resp);
     }
-    public void addUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+
+    public void addUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/user-add.jsp");
         requestDispatcher.forward(req, resp);
     }

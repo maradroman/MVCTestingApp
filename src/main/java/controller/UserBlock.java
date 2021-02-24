@@ -17,7 +17,7 @@ import java.io.IOException;
 public class UserBlock extends HttpServlet {
     UserDAO userDAO = null;
 
-    public UserBlock(){
+    public UserBlock() {
         userDAO = new UserDAOImpl();
     }
 
@@ -27,16 +27,25 @@ public class UserBlock extends HttpServlet {
 
         String type = (String) session.getAttribute("type");
 
-        if (type.equals("admin")){
+        if (type.equals("admin")) {
 
-        System.out.println("block servlet");
-        String userName = req.getParameter("userName");
-        User user = new User();
-        user.setUsername(userName);
-        if (userDAO.block(user)){
-            req.setAttribute("message", "User blocked successfully");
-        }
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
+            System.out.println("block servlet");
+            String userName = req.getParameter("userName");
+            User user = new User();
+            user.setUsername(userName);
+            if (userDAO.block(user)) {
+                req.setAttribute("message", "User blocked successfully");
+            }
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
             try {
                 requestDispatcher.forward(req, resp);
             } catch (ServletException e) {
@@ -45,13 +54,5 @@ public class UserBlock extends HttpServlet {
                 e.printStackTrace();
             }
         }
-        else {RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
-            try {
-                requestDispatcher.forward(req, resp);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-}}
+    }
+}

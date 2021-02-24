@@ -18,15 +18,17 @@ import java.io.UnsupportedEncodingException;
 public class LoginController extends HttpServlet {
     LoginDAO loginDAO = null;
 
-    public LoginController(){loginDAO = new LoginDAOImpl();
+    public LoginController() {
+        loginDAO = new LoginDAOImpl();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if (session.getAttribute("language") == null && session.getAttribute("country") == null){
-        session.setAttribute("language", "ua");
-        session.setAttribute("country", "UA");}
+        if (session.getAttribute("language") == null && session.getAttribute("country") == null) {
+            session.setAttribute("language", "ua");
+            session.setAttribute("country", "UA");
+        }
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/publicPages/login.jsp");
         try {
@@ -49,15 +51,15 @@ public class LoginController extends HttpServlet {
         login.setUsername(req.getParameter("username"));
         login.setPassword(req.getParameter("password"));
         Login authResult = loginDAO.authenticate(login);
-        if (authResult != null){
-            if (authResult.getIsBlocked().equals("true")){
+        if (authResult != null) {
+            if (authResult.getIsBlocked().equals("true")) {
                 try {
                     resp.sendRedirect("login?status=blocked");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 session.setAttribute("message", "Your account was blocked by administration");
-            }else {
+            } else {
                 session.setAttribute("username", authResult.getUsername());
                 session.setAttribute("userID", authResult.getId());
                 session.setAttribute("type", authResult.getType());
@@ -72,7 +74,7 @@ public class LoginController extends HttpServlet {
                     e.printStackTrace();
                 }
             }
-        }else {
+        } else {
             try {
                 resp.sendRedirect("login?status=error");
             } catch (IOException e) {
@@ -80,5 +82,5 @@ public class LoginController extends HttpServlet {
             }
         }
     }
-    }
+}
 

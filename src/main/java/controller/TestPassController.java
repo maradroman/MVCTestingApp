@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.*;
+import java.util.List;
 
 @WebServlet("/pass")
 public class TestPassController extends HttpServlet {
@@ -40,11 +40,11 @@ public class TestPassController extends HttpServlet {
         req.setAttribute("testID", req.getParameter("testID"));
         HttpSession session = req.getSession();
         testEnd = System.currentTimeMillis();
-        testTime = (testEnd - testStart)/1000;
+        testTime = (testEnd - testStart) / 1000;
 
         String[] questions = req.getParameterValues("questions");
-        for (String question: questions
-             ) {
+        for (String question : questions
+        ) {
             testPass = new TestPass();
             try {
                 testPass.setQuestionID(Integer.parseInt(question));
@@ -52,23 +52,31 @@ public class TestPassController extends HttpServlet {
                 e.printStackTrace();
             }
 
-            if (req.getParameter(question + "1") == null){
+            if (req.getParameter(question + "1") == null) {
                 testPass.setOption1Chosen("false");
-            }else{testPass.setOption1Chosen(req.getParameter(question + "1"));}
+            } else {
+                testPass.setOption1Chosen(req.getParameter(question + "1"));
+            }
 
-            if (req.getParameter(question + "2") == null){
+            if (req.getParameter(question + "2") == null) {
                 testPass.setOption2Chosen("false");
-            }else{testPass.setOption2Chosen(req.getParameter(question + "2"));}
+            } else {
+                testPass.setOption2Chosen(req.getParameter(question + "2"));
+            }
 
-            if (req.getParameter(question + "3") == null){
+            if (req.getParameter(question + "3") == null) {
                 testPass.setOption3Chosen("false");
-            }else{testPass.setOption3Chosen(req.getParameter(question + "3"));}
+            } else {
+                testPass.setOption3Chosen(req.getParameter(question + "3"));
+            }
 
-            if (req.getParameter(question + "4") == null){
+            if (req.getParameter(question + "4") == null) {
                 testPass.setOption4Chosen("false");
-            }else{testPass.setOption4Chosen(req.getParameter(question + "4"));}
+            } else {
+                testPass.setOption4Chosen(req.getParameter(question + "4"));
+            }
 
-            if (testPassDAO.checkAnswer(testPass)){
+            if (testPassDAO.checkAnswer(testPass)) {
                 result += 1;
             }
         }
@@ -85,7 +93,7 @@ public class TestPassController extends HttpServlet {
         passedTest.setResult(percentRound);
         passedTest.setTimeSpent(Math.toIntExact(testTime));
 
-        if (passedTestDAO.save(passedTest)){
+        if (passedTestDAO.save(passedTest)) {
             session.setAttribute("message", "Result saved successfully");
             testDAO.addNumberOfRequests(testID);
         }
@@ -97,11 +105,11 @@ public class TestPassController extends HttpServlet {
         }
     }
 
-    public int roundResult(Integer result, Integer qOfQuestions){
+    public int roundResult(Integer result, Integer qOfQuestions) {
         double resultDouble = result;
         double qOfQuestionsDouble = qOfQuestions;
-        double percent = (resultDouble/qOfQuestionsDouble)*100;
-        return (int)Math.round(percent);
+        double percent = (resultDouble / qOfQuestionsDouble) * 100;
+        return (int) Math.round(percent);
     }
 
 
@@ -119,19 +127,18 @@ public class TestPassController extends HttpServlet {
         req.setAttribute("list", list);
 
 
-
-        if (type.equals("student")){
+        if (type.equals("student")) {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/userPages/pass-test.jsp");
             try {
-                requestDispatcher.forward(req,resp);
+                requestDispatcher.forward(req, resp);
             } catch (ServletException | IOException e) {
                 e.printStackTrace();
             }
         }
-        if (type.equals("admin")){
+        if (type.equals("admin")) {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/pass-test.jsp");
             try {
-                requestDispatcher.forward(req,resp);
+                requestDispatcher.forward(req, resp);
             } catch (ServletException | IOException e) {
                 e.printStackTrace();
             }

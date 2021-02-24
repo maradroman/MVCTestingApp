@@ -16,7 +16,7 @@ public class UserDAOImpl implements UserDAO {
 
 
     public List<User> get() {
-        List <User> list = null;
+        List<User> list = null;
         User user = null;
 
         list = new ArrayList<>();
@@ -27,24 +27,25 @@ public class UserDAOImpl implements UserDAO {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
-        while (resultSet.next()){
-            user = new User();
-            user.setId(resultSet.getInt("id"));
-            user.setUsername(resultSet.getString("username"));
-            user.setName(resultSet.getString("name"));
-            user.setSurname(resultSet.getString("surname"));
-            user.setEmail(resultSet.getString("email"));
-            user.setPassword(resultSet.getString("password"));
-            user.setType(resultSet.getString("type"));
-            user.setIsBlocked(resultSet.getString("isBlocked"));
-            list.add(user);
-        }} catch (SQLException throwables) {
-                try {
-                    throwables.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            while (resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setName(resultSet.getString("name"));
+                user.setSurname(resultSet.getString("surname"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setType(resultSet.getString("type"));
+                user.setIsBlocked(resultSet.getString("isBlocked"));
+                list.add(user);
             }
+        } catch (SQLException throwables) {
+            try {
+                throwables.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return list;
     }
 
@@ -97,11 +98,11 @@ public class UserDAOImpl implements UserDAO {
         User user = null;
 
         try {
-            String sql = "SELECT * FROM users where id=" +id;
+            String sql = "SELECT * FROM users where id=" + id;
             connection = DBConnectionUtil.openConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 user = new User();
                 user.setId(resultSet.getInt("id"));
                 user.setUsername(resultSet.getString("username"));
@@ -123,9 +124,9 @@ public class UserDAOImpl implements UserDAO {
         String sql = null;
         try {
             if (user.getPassword() != null) {
-                sql = "UPDATE users SET username='" + user.getUsername() + "',name='" + user.getName() + "',surname='" + user.getSurname() + "',email='" + user.getEmail() + "',password='" + user.getPassword() + "' where id=" +user.getId();
-            }else {
-                sql = "UPDATE users SET username='" + user.getUsername() + "',name='" + user.getName() + "',surname='" + user.getSurname() + "',email='" + user.getEmail() + "' where id=" +user.getId();
+                sql = "UPDATE users SET username='" + user.getUsername() + "',name='" + user.getName() + "',surname='" + user.getSurname() + "',email='" + user.getEmail() + "',password='" + user.getPassword() + "' where id=" + user.getId();
+            } else {
+                sql = "UPDATE users SET username='" + user.getUsername() + "',name='" + user.getName() + "',surname='" + user.getSurname() + "',email='" + user.getEmail() + "' where id=" + user.getId();
 
             }
             connection = DBConnectionUtil.openConnection();
@@ -139,5 +140,21 @@ public class UserDAOImpl implements UserDAO {
         return flag;
     }
 
+    @Override
+    public boolean delete(String userID) {
+        boolean flag = false;
+        String sql = "DELETE FROM users where id=" + userID;
 
+        try {
+            connection = DBConnectionUtil.openConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+            flag = true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        return flag;
+    }
 }

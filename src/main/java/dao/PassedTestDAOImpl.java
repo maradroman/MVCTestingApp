@@ -20,10 +20,10 @@ public class PassedTestDAOImpl implements PassedTestDAO {
         String sql = "INSERT INTO passed_tests(user_id, test_id, result, time_spent) values ('" + passedTest.getUserID() + "', '" + passedTest.getTestID() + "', '" + passedTest.getResult() + "', '" + passedTest.getTimeSpent() + "')";
 
         try {
-           connection = DBConnectionUtil.openConnection();
-           preparedStatement = connection.prepareStatement(sql);
-           preparedStatement.executeUpdate();
-           flag = true;
+            connection = DBConnectionUtil.openConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+            flag = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class PassedTestDAOImpl implements PassedTestDAO {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 passedTest = new PassedTest();
                 passedTest.setId(resultSet.getInt("id"));
                 passedTest.setUserID(resultSet.getInt("user_id"));

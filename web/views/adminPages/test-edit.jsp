@@ -11,7 +11,7 @@
         return new String(resourceBundle.getString(resName).getBytes("ISO-8859-1"), "UTF-8");
     }
 %>
-
+EDIT TEST
 <% Locale currentLocale = new Locale((String) session.getAttribute("language"), (String) session.getAttribute("country"));
     ResourceBundle resource = ResourceBundle.getBundle("main", currentLocale);
     String LocaleAddTest = getResource(resource, "LocaleAddTest");
@@ -44,36 +44,37 @@
     <div class="card">
         <div class="card-body">
 
-            <form action="${pageContext.request.contextPath}/tests" method="post">
+            <form action="${pageContext.request.contextPath}/tests?action=EDIT&testID=${test.id}" method="post">
 
                 <div class="mb-3">
                     <label for="name" class="form-label"><%=LocaleTestName%>
                     </label>
                     <input minlength="3" maxlength="45" id="name" class="form-control" placeholder="<%=LocaleTestName%>"
-                           type="text" name="name" required><br>
+                           value="${test.name}" type="text" name="name" required><br>
                 </div>
 
 
                 <div class="mb-3">
                     <label for="complexity" class="form-label"><%=LocaleComplexity%>
                     </label>
-                    <input id="complexity" class="form-control-range" type="range" name="complexity" min="1" max="10"
-                           step="1">
+                    <input id="complexity" class="form-control-range" type="range" value="${test.complexity}"
+                           name="complexity" min="1" max="10" step="1">
                     1_____2_____3_____4_____5____6_____7_____8____9____10
                 </div>
 
                 <div class="mb-3">
                     <label for="timeForTest" class="form-label"><%=LocaleTimeForTest%>
                     </label>
-                    <input minlength="1" pattern="[0-9]*" maxlength="10" id="timeForTest" class="form-control"
-                           placeholder="<%=LocaleTimeForTest%>" type="text" name="timeForTest" required><br>
+                    <input minlength="1" pattern="[0-9]*" maxlength="10" id="timeForTest" value="${test.timeForTest}"
+                           class="form-control" placeholder="<%=LocaleTimeForTest%>" type="text" name="timeForTest"
+                           required><br>
                 </div>
 
                 <div class="mb-3">
                     <label for="topic" class="form-label"><%=LocaleTopic%>
                     </label>
                     <input minlength="1" maxlength="10" id="topic" class="form-control" placeholder="<%=LocaleTopic%>"
-                           type="text" name="topic" required><br>
+                           value="${test.topic}" type="text" name="topic" required><br>
                 </div>
 
                 <button type="submit" class="btn btn-primary"><%=LocaleSubmit%>

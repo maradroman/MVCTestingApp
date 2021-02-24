@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 /**
  * Returns the connection object that can be used to connect to database
- *
+ * <p>
  * Class.forName(DRIVER) - dynamically load the driver class into memory, after which it is automatically registered
  */
 public class DBConnectionUtil {

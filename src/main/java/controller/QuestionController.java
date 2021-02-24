@@ -17,34 +17,36 @@ import java.io.UnsupportedEncodingException;
 @WebServlet("/questions")
 public class QuestionController extends HttpServlet {
     QuestionDAO questionDAO = null;
-    public QuestionController(){questionDAO = new QuestionDAOImpl();  }
+
+    public QuestionController() {
+        questionDAO = new QuestionDAOImpl();
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         String type = session.getAttribute("type").toString();
 
-        if (type.equals("admin")){
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/question-add.jsp");
+        if (type.equals("admin")) {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/question-add.jsp");
             try {
-                requestDispatcher.forward(req,resp);
+                requestDispatcher.forward(req, resp);
             } catch (ServletException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
             try {
-                requestDispatcher.forward(req,resp);
+                requestDispatcher.forward(req, resp);
             } catch (ServletException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        }
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -53,10 +55,10 @@ public class QuestionController extends HttpServlet {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String option1IsCorrect ="false";
-        String option2IsCorrect ="false";
-        String option3IsCorrect ="false";
-        String option4IsCorrect ="false";
+        String option1IsCorrect = "false";
+        String option2IsCorrect = "false";
+        String option3IsCorrect = "false";
+        String option4IsCorrect = "false";
 
         Integer testID = null;
         try {
@@ -70,34 +72,34 @@ public class QuestionController extends HttpServlet {
         String option3 = req.getParameter("option3");
         String option4 = req.getParameter("option4");
 
-        if (req.getParameter("option1IsCorrect") == null){
-            option1IsCorrect ="false";
-        }else{
-            if (req.getParameter("option1IsCorrect").equals("true")){
+        if (req.getParameter("option1IsCorrect") == null) {
+            option1IsCorrect = "false";
+        } else {
+            if (req.getParameter("option1IsCorrect").equals("true")) {
                 option1IsCorrect = "true";
             }
         }
 
-        if (req.getParameter("option2IsCorrect") == null){
-            option2IsCorrect ="false";
-        }else{
-            if (req.getParameter("option2IsCorrect").equals("true")){
+        if (req.getParameter("option2IsCorrect") == null) {
+            option2IsCorrect = "false";
+        } else {
+            if (req.getParameter("option2IsCorrect").equals("true")) {
                 option2IsCorrect = "true";
             }
         }
 
-        if (req.getParameter("option3IsCorrect") == null){
-            option3IsCorrect ="false";
-        }else{
-            if (req.getParameter("option3IsCorrect").equals("true")){
+        if (req.getParameter("option3IsCorrect") == null) {
+            option3IsCorrect = "false";
+        } else {
+            if (req.getParameter("option3IsCorrect").equals("true")) {
                 option3IsCorrect = "true";
             }
         }
 
-        if (req.getParameter("option4IsCorrect") == null){
-            option4IsCorrect ="false";
-        }else{
-            if (req.getParameter("option4IsCorrect").equals("true")){
+        if (req.getParameter("option4IsCorrect") == null) {
+            option4IsCorrect = "false";
+        } else {
+            if (req.getParameter("option4IsCorrect").equals("true")) {
                 option4IsCorrect = "true";
             }
         }
@@ -114,7 +116,7 @@ public class QuestionController extends HttpServlet {
         question.setOption3IsCorrect(option3IsCorrect);
         question.setOption4IsCorrect(option4IsCorrect);
 
-        if (questionDAO.save(question)){
+        if (questionDAO.save(question)) {
             req.setAttribute("message", "Question saved successfully");
             req.setAttribute("page", "question");
         }

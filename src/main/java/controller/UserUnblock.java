@@ -17,7 +17,8 @@ import java.io.IOException;
 public class UserUnblock extends HttpServlet {
     UserDAO userDAO = null;
 
-    public UserUnblock(){ userDAO = new UserDAOImpl();
+    public UserUnblock() {
+        userDAO = new UserDAOImpl();
     }
 
     @Override
@@ -26,29 +27,29 @@ public class UserUnblock extends HttpServlet {
 
         String type = (String) session.getAttribute("type");
 
-        if (type.equals("admin")){
+        if (type.equals("admin")) {
 
 
-        System.out.println("unblock servlet");
-        String userName = req.getParameter("userName");
-        User user = new User();
-        user.setUsername(userName);
-        if (userDAO.unBlock(user)){
-            req.setAttribute("message", "User unblocked successfully");
-        }
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
+            System.out.println("unblock servlet");
+            String userName = req.getParameter("userName");
+            User user = new User();
+            user.setUsername(userName);
+            if (userDAO.unBlock(user)) {
+                req.setAttribute("message", "User unblocked successfully");
+            }
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
+            try {
+                requestDispatcher.forward(req, resp);
+            } catch (ServletException | IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
             try {
                 requestDispatcher.forward(req, resp);
             } catch (ServletException | IOException e) {
                 e.printStackTrace();
             }
         }
-
-        else {RequestDispatcher requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
-            try {
-                requestDispatcher.forward(req, resp);
-            } catch (ServletException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-}}
+    }
+}

@@ -14,7 +14,6 @@ public class QuestionDAOImpl implements QuestionDAO {
     PreparedStatement preparedStatement = null;
 
 
-
     public List<Question> get(int testID) {
         List<Question> list = null;
         Question question = null;
@@ -27,7 +26,7 @@ public class QuestionDAOImpl implements QuestionDAO {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 question = new Question();
                 question.setId(resultSet.getInt("id"));
                 question.setTestID(resultSet.getInt("test_id"));
@@ -53,7 +52,7 @@ public class QuestionDAOImpl implements QuestionDAO {
 
 
         try {
-            String sql = "INSERT INTO question(test_id, text, option1, option2, option3, option4, o1IsCorrect, o2IsCorrect, o3IsCorrect, o4IsCorrect) VALUES('" + question.getTestID() + "','"+ question.getText() + "','"+ question.getOption1() + "','"+ question.getOption2() + "','"+ question.getOption3() + "','"+ question.getOption4() + "','"+ question.getOption1IsCorrect() + "','"+ question.getOption2IsCorrect() + "','"+ question.getOption3IsCorrect() + "','"+ question.getOption4IsCorrect() + "')";
+            String sql = "INSERT INTO question(test_id, text, option1, option2, option3, option4, o1IsCorrect, o2IsCorrect, o3IsCorrect, o4IsCorrect) VALUES('" + question.getTestID() + "','" + question.getText() + "','" + question.getOption1() + "','" + question.getOption2() + "','" + question.getOption3() + "','" + question.getOption4() + "','" + question.getOption1IsCorrect() + "','" + question.getOption2IsCorrect() + "','" + question.getOption3IsCorrect() + "','" + question.getOption4IsCorrect() + "')";
 
             connection = DBConnectionUtil.openConnection();
             preparedStatement = connection.prepareStatement(sql);
@@ -62,6 +61,24 @@ public class QuestionDAOImpl implements QuestionDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return flag;
+    }
+
+    @Override
+    public boolean delete(String questionID) {
+        boolean flag = false;
+        String sql = "DELETE FROM question where id=" + questionID;
+
+        try {
+            connection = DBConnectionUtil.openConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+            flag = true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
         return flag;
     }
 }

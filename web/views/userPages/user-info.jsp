@@ -1,10 +1,10 @@
-<%@ page import="java.util.Locale" %>
 <%@ page import="java.io.UnsupportedEncodingException" %>
+<%@ page import="java.util.Locale" %>
 <%@ page import="java.util.ResourceBundle" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"
-         language="java"%>
+         language="java" %>
 
 <%!
     public String getResource(ResourceBundle resourceBundle, String resName) throws UnsupportedEncodingException, UnsupportedEncodingException {
@@ -34,12 +34,13 @@
     String username = (String) session.getAttribute("username");
 
     System.out.println(session.getAttribute("userID"));
-    if (username == null){
+    if (username == null) {
         response.sendRedirect("login");
     }
 %>
 <head>
-    <title><%=LocaleStudentInfo%></title>
+    <title><%=LocaleStudentInfo%>
+    </title>
     <link href="https://unpkg.com/bootstrap@4.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
@@ -57,24 +58,31 @@
 
 
 <div class="container" style="padding-top: 10px">
-       <h4> <%=LocaleWelcome%>, ${user.name} ${user.surname}</h4>
+    <h4><%=LocaleWelcome%>, ${user.name} ${user.surname}</h4>
     <table class="table table-hover">
         <tr class="thead-light">
-            <th><%=LocaleUsername%></th>
-            <th><%=LocaleName%></th>
-            <th><%=LocaleSurname%></th>
-            <th><%=LocaleEmail%></th>
-            <th><%=LocaleType%></th>
-            <th><%=LocaleActions%></th>
+            <th><%=LocaleUsername%>
+            </th>
+            <th><%=LocaleName%>
+            </th>
+            <th><%=LocaleSurname%>
+            </th>
+            <th><%=LocaleEmail%>
+            </th>
+            <th><%=LocaleType%>
+            </th>
+            <th><%=LocaleActions%>
+            </th>
         </tr>
-            <tr>
-                <td>${user.username}</td>
-                <td>${user.name}</td>
-                <td>${user.surname}</td>
-                <td>${user.email}</td>
-                <td>${user.type}</td>
-                <td><a href="${pageContext.request.contextPath}/users?action=EDIT" class="btn btn-warning"><%=LocaleEdit%></a></td>
-            </tr>
+        <tr>
+            <td>${user.username}</td>
+            <td>${user.name}</td>
+            <td>${user.surname}</td>
+            <td>${user.email}</td>
+            <td>${user.type}</td>
+            <td><a href="${pageContext.request.contextPath}/users?action=EDIT" class="btn btn-warning"><%=LocaleEdit%>
+            </a></td>
+        </tr>
     </table>
 </div>
 </body>

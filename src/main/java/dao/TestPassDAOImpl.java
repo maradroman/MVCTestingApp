@@ -12,6 +12,7 @@ public class TestPassDAOImpl implements TestPassDAO {
     Connection connection = null;
     Statement statement = null;
     ResultSet resultSet = null;
+
     @Override
     public Boolean checkAnswer(TestPass testPass) {
         Boolean flag = false;
@@ -21,11 +22,11 @@ public class TestPassDAOImpl implements TestPassDAO {
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-            while (resultSet.next()){
-            flag =  resultSet.getString("o1IsCorrect").equals(testPass.getOption1Chosen())&&
-                    resultSet.getString("o2IsCorrect").equals(testPass.getOption2Chosen())&&
-                    resultSet.getString("o3IsCorrect").equals(testPass.getOption3Chosen())&&
-                    resultSet.getString("o4IsCorrect").equals(testPass.getOption4Chosen());
+            while (resultSet.next()) {
+                flag = resultSet.getString("o1IsCorrect").equals(testPass.getOption1Chosen()) &&
+                        resultSet.getString("o2IsCorrect").equals(testPass.getOption2Chosen()) &&
+                        resultSet.getString("o3IsCorrect").equals(testPass.getOption3Chosen()) &&
+                        resultSet.getString("o4IsCorrect").equals(testPass.getOption4Chosen());
             }
         } catch (Exception e) {
             e.printStackTrace();

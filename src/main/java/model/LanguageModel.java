@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 
 public class LanguageModel {
 
-    public static void switchLanguage(HttpServletRequest req){
+    public static void switchLanguage(HttpServletRequest req) {
         HttpSession session = req.getSession();
         try {
             session.setAttribute("language", req.getParameter("lang"));
@@ -16,11 +16,13 @@ public class LanguageModel {
         }
 
     }
-    public static void setDefaultLanguage(HttpServletRequest req){
+
+    public static void setDefaultLanguage(HttpServletRequest req) {
         HttpSession session = req.getSession();
-        if (session.getAttribute("language") == null && session.getAttribute("country") == null){
+        if (session.getAttribute("language") == null && session.getAttribute("country") == null) {
             session.setAttribute("language", "ua");
-            session.setAttribute("country", "UA");}
+            session.setAttribute("country", "UA");
+        }
     }
 
 }

@@ -1,15 +1,14 @@
 package entity;
 
 
-
 public class Answer {
     private String testId;
     private String questionID;
-    private  String userID;
-    private  String option1 = "false";
+    private String userID;
+    private String option1 = "false";
     private String option2 = "false";
-    private  String option3 = "false";
-    private  String option4 = "false";
+    private String option3 = "false";
+    private String option4 = "false";
 
 
     public String getTestId() {

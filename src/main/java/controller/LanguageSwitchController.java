@@ -14,11 +14,11 @@ public class LanguageSwitchController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        if (req.getParameter("lang").equals("en")){
+        if (req.getParameter("lang").equals("en")) {
             session.setAttribute("language", "en");
             session.setAttribute("country", "EN");
         }
-        if (req.getParameter("lang").equals("ua")){
+        if (req.getParameter("lang").equals("ua")) {
             session.setAttribute("language", "ua");
             session.setAttribute("country", "UA");
         }
