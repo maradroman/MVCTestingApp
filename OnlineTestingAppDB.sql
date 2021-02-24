@@ -33,8 +33,8 @@ CREATE TABLE `passed_tests` (
   PRIMARY KEY (`id`),
   KEY `id_idx` (`user_id`),
   KEY `id_idx1` (`test_id`),
-  CONSTRAINT `id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+  CONSTRAINT `id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `passed_tests` (
 
 LOCK TABLES `passed_tests` WRITE;
 /*!40000 ALTER TABLE `passed_tests` DISABLE KEYS */;
-INSERT INTO `passed_tests` VALUES (39,23,1,83,60),(40,23,2,0,20);
+INSERT INTO `passed_tests` VALUES (42,63,40,100,6);
 /*!40000 ALTER TABLE `passed_tests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +68,7 @@ CREATE TABLE `question` (
   `o4IsCorrect` enum('true','false') NOT NULL DEFAULT 'false',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (33,1,'CPP','right','---','---','---','true','false','false','false'),(34,1,'question','right','wrong','wrong','right','true','false','false','true'),(35,1,'question','right','right','wrong','wrong','true','true','false','false'),(36,1,'запитання','правильна відповідь','неправильна відповідь','неправильна відповідь','неправильна відповідь','true','false','false','false'),(37,2,'rwerwe','321312','4214124124','32423423','4123321312','false','false','true','false'),(38,1,'ugyhgfhgdhdg','hgfdhgdhdghgd','hgdhdg','hgfhgh','dhdhd','true','false','false','false'),(39,1,'ппапаап','апаппаапап','паапапап','паапап','апапапапаап','true','true','false','false'),(40,2,'опраоароа','ораоа','опренггк','гкгкг','кгкгкг','true','true','false','false'),(41,3,'erqweqweqweqweqweqweqw','+++++','-----','-----','+++++','true','false','false','true'),(42,31,'hgfhgdhdghdghdg','+++++','+++++','_______','_______','true','true','false','false'),(43,32,'ghdhgdhdghdghdghd','++++++','fgsdgfsgfsd','gsdfgsdfgfsd','gsdfgsdfgsdf','true','false','false','false'),(44,34,'bbvbvbvb','4242234','4224243','342424','4234234423','false','false','false','true'),(45,32,'fdsfsd','fdsfsdfsd','fsdfsd','fsdfsd','ffsdfsdfsd','false','false','true','false');
+INSERT INTO `question` VALUES (33,1,'CPP','right','---','---','---','true','false','false','false'),(34,1,'question','right','wrong','wrong','right','true','false','false','true'),(35,1,'question','right','right','wrong','wrong','true','true','false','false'),(36,1,'запитання','правильна відповідь','неправильна відповідь','неправильна відповідь','неправильна відповідь','true','false','false','false'),(37,2,'rwerwe','321312','4214124124','32423423','4123321312','false','false','true','false'),(38,1,'ugyhgfhgdhdg','hgfdhgdhdghgd','hgdhdg','hgfhgh','dhdhd','true','false','false','false'),(39,1,'ппапаап','апаппаапап','паапапап','паапап','апапапапаап','true','true','false','false'),(40,2,'опраоароа','ораоа','опренггк','гкгкг','кгкгкг','true','true','false','false'),(41,3,'erqweqweqweqweqweqweqw','+++++','-----','-----','+++++','true','false','false','true'),(42,31,'hgfhgdhdghdghdg','+++++','+++++','_______','_______','true','true','false','false'),(43,32,'ghdhgdhdghdghdghd','++++++','fgsdgfsgfsd','gsdfgsdfgfsd','gsdfgsdfgsdf','true','false','false','false'),(44,34,'bbvbvbvb','4242234','4224243','342424','4234234423','false','false','false','true'),(45,32,'fdsfsd','fdsfsdfsd','fsdfsd','fsdfsd','ffsdfsdfsd','false','false','true','false'),(46,40,'What of the following is the default value of a local variable?','null','0','Depends upon the type of variable','Not assigned','false','false','false','true'),(47,40,'What is the default value of float variable?','0.0d','0.0f','0','not defined','false','true','false','false'),(48,40,'What is the default value of Object variable?','undefined','0','null','not defined','false','false','true','false');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,7 +99,7 @@ CREATE TABLE `tests` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `topic_idx` (`topic`),
   CONSTRAINT `topicID` FOREIGN KEY (`topic`) REFERENCES `topic` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +108,7 @@ CREATE TABLE `tests` (
 
 LOCK TABLES `tests` WRITE;
 /*!40000 ALTER TABLE `tests` DISABLE KEYS */;
-INSERT INTO `tests` VALUES (1,'cpp',5,3,30,1),(2,'java',7,72,25,2),(3,'javascript',5,312,27,3),(31,'gfgdsgfsdgsdf',4,0,27,1),(32,'twerywyeuyeueyuyeuery',6,0,12,2),(33,'cfdffdsdfsdf',6,0,12,1),(34,'2311231233131',6,0,21,1),(35,'gfsdgsfgsdf',6,0,23,1),(36,'321321312',6,0,32,1),(37,'432432432',6,0,22,1),(38,'3213124112441',6,0,123,1),(39,'fgdfgfsgsf',10,0,25,1);
+INSERT INTO `tests` VALUES (40,'Java Basics Quiz',2,3,30,2),(41,'Java Array Quiz',3,0,30,2),(42,'Java OOPs Quiz',3,0,30,2),(43,'String Handling Quiz',4,0,25,2),(44,'Exception Hand. Quiz',5,0,25,2),(45,'Multithreading Quiz',6,0,40,2),(46,'IO Quiz',5,0,23,2),(47,'Collection Quiz',6,0,45,2),(48,'JDBC Quiz',6,0,35,2),(49,'Java Misc. Quiz',6,0,50,2);
 /*!40000 ALTER TABLE `tests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,7 +156,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `idusers_UNIQUE` (`id`),
   UNIQUE KEY `login_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,7 +165,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (22,'MaradRoman','Roma','Marad','maradroman@mail.com','123456789','false','admin'),(23,'FooJon','John','Foo111','johnfoo@gmail.coms','123qweQWE','false','student'),(24,'bobdoe','Bob','Doe','doebob@outlook.com','','false','student'),(47,'рома','мапа','воалдпо','roma@gma.com','123qweQWE','false','student'),(48,'gdgdfgdtrtretretet','ettegdgdg','gddgfggdgd','gdgdfgdd@gjkldg.com','123qweQWE','false','student'),(50,'newuser','newname','newsurname','gjfkldf@gfjkdl.com','123qweQWE','false','student'),(53,'MaradRomanssddssd','dsdsdssdd','dsdsds','dsdsdssd','123456789WQ12wq','false','student');
+INSERT INTO `users` VALUES (22,'MaradRoman','Roma','Marad','maradroman@mail.com','123456789','false','admin'),(60,'LindaRamirez','Linda','Ramirez','linda.ramirez@example.com','OuUenWtZNM3xsSt','false','student'),(61,'ShellyWoods','Shelly','Woods','shelly.woods@example.com','0Ft1zEQNc1qIGqD','false','student'),(62,'HeatherSimpson','Heather','Simpson','heather.simpson@example.com','G9i3bQbeijnMt9f','false','student'),(63,'AlexBurke','Alex1','Burke','alex.burke@example.com','TdthXZ8XwOkUaIq','false','student'),(64,'ChristyEvans','Christy','Evans','christy.evans@example.com','TmYnCkucmZbnSe5','false','student');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -178,4 +178,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-24 11:41:34
+-- Dump completed on 2021-02-24 14:25:42
