@@ -69,15 +69,24 @@
                            placeholder="<%=LocaleTimeForTest%>" type="text" name="timeForTest" required><br>
                 </div>
 
+
+
                 <div class="mb-3">
                     <label for="topic" class="form-label"><%=LocaleTopic%>
                     </label>
-                    <input minlength="1" maxlength="10" id="topic" class="form-control" placeholder="<%=LocaleTopic%>"
-                           type="text" name="topic" required><br>
+
+                    <select class="form-control" id="topic" name="topic">
+                        <c:forEach var="topic" items="${topics}">
+                            <option value="${topic.id}"><c:out value="${topic.name}"></c:out></option>
+                        </c:forEach>
+                    </select>
+
                 </div>
 
                 <button type="submit" class="btn btn-primary"><%=LocaleSubmit%>
                 </button>
+
+
             </form>
         </div>
 
