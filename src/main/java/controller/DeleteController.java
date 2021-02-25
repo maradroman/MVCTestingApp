@@ -29,7 +29,7 @@ public class DeleteController extends HttpServlet {
         } else if (req.getParameter("id") != null && action.equals("user")) {
             deleteUser(req.getParameter("id"));
             session.setAttribute("message", "User deleted successfully");
-            requestDispatcher = req.getRequestDispatcher("/users");
+            requestDispatcher = req.getRequestDispatcher("/users?action=LIST");
         } else if (req.getParameter("id") != null && action.equals("question")) {
             deleteQuestion(req.getParameter("id"));
             session.setAttribute("message", "Question deleted successfully");
