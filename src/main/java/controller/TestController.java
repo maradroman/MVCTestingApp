@@ -1,11 +1,9 @@
 package controller;
 
-import dao.PassedTestDAO;
-import dao.PassedTestDAOImpl;
-import dao.TestDAO;
-import dao.TestDAOImpl;
+import dao.*;
 import entity.PassedTest;
 import entity.Test;
+import entity.Topic;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,10 +20,13 @@ import java.util.List;
 public class TestController extends HttpServlet {
     TestDAO testDAO = null;
     PassedTestDAO passedTestDAO = null;
+    TopicDAO topicDAO = null;
 
     public TestController() {
         testDAO = new TestDAOImpl();
         passedTestDAO = new PassedTestDAOImpl();
+        topicDAO = new TopicDAOImpl();
+
     }
 
     @Override
@@ -36,14 +37,19 @@ public class TestController extends HttpServlet {
         if (type.equals("admin")) {
             String action = req.getParameter("action");
             if (action != null && action.equals("add")) {
+
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/views/adminPages/test-add.jsp");
                 try {
+                    List<Topic> topicList = topicDAO.getAllTopics();
+                    req.setAttribute("topics", topicList);
                     requestDispatcher.forward(req, resp);
                 } catch (ServletException | IOException e) {
                     e.printStackTrace();
                 }
             }
             if (action != null && action.equals("EDIT")) {
+                List<Topic> topicList = topicDAO.getAllTopics();
+                req.setAttribute("topics", topicList);
                 String testToEdit = req.getParameter("testID");
                 if (testToEdit != null) {
                     req.setAttribute("test", testDAO.get(Integer.parseInt(testToEdit)));
@@ -57,7 +63,9 @@ public class TestController extends HttpServlet {
             } else {
                 List<PassedTest> passedTestList = passedTestDAO.get((Integer) session.getAttribute("userID"));
                 List<Test> testsList = testDAO.get();
+                List<Topic> topicList = topicDAO.getAllTopics();
                 req.setAttribute("list", testsList);
+                req.setAttribute("topics", topicList);
                 req.setAttribute("listpassed", passedTestList);
                 req.setAttribute("message", req.getSession().getAttribute("message"));
 
@@ -72,7 +80,9 @@ public class TestController extends HttpServlet {
         if (type.equals("student")) {
             List<PassedTest> passedTestList = passedTestDAO.get((Integer) session.getAttribute("userID"));
             List<Test> testsList = testDAO.get();
+            List<Topic> topicList = topicDAO.getAllTopics();
             req.setAttribute("list", testsList);
+            req.setAttribute("topics", topicList);
             req.setAttribute("listpassed", passedTestList);
             req.setAttribute("message", req.getSession().getAttribute("message"));
 

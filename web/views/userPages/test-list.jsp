@@ -56,7 +56,7 @@
             </th>
             <th><%=LocaleTimeForTest%>
             </th>
-            <%--            <th><%=LocaleTopic%></th>--%>
+                        <th><%=LocaleTopic%></th>
             <th><%=LocaleQuestion%>
             </th>
             <th><%=LocaleAddQuestion%>
@@ -71,7 +71,14 @@
                 <td>${test.complexity}</td>
                 <td>${test.numberOfRequests}</td>
                 <td>${test.timeForTest}</td>
-                    <%--                    <td>${test.topic}</td>--%>
+                <td>
+                    <c:forEach items="${topics}" var="topic">
+                        <c:if test="${topic.id == test.topic}">
+                            <c:out value="${topic.name}"/>
+                        </c:if>
+
+                    </c:forEach>
+                </td>
                 <td>${test.questions.size()}</td>
                 <td>
                     <c:set scope="request" var="flag" value="false"/>

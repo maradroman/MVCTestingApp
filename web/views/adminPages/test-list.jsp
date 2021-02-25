@@ -63,12 +63,12 @@
             </th>
             <th><%=LocaleTimeForTest%>
             </th>
-            <%--            <th><%=LocaleTopic%></th>--%>
+            <th><%=LocaleTopic%>
+            </th>
             <th><%=LocaleQuestion%>
             </th>
             <th><%=LocaleAddQuestion%>
             </th>
-            <%--            <th>Edit</th>--%>
         </tr>
         </thead>
         <tbody>
@@ -82,13 +82,20 @@
                 <td>${test.complexity}</td>
                 <td>${test.numberOfRequests}</td>
                 <td>${test.timeForTest}</td>
-                    <%--                    <td>${test.topic}</td>--%>
+
+                <td>
+                    <c:forEach items="${topics}" var="topic">
+                        <c:if test="${topic.id == test.topic}">
+                            <c:out value="${topic.name}"/>
+                        </c:if>
+
+                    </c:forEach>
+                </td>
                 <td>${test.questions.size()}</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/questions?testID=${test.id}" class="btn btn-warning"
                        style="" role="button" data-bs-toggle="button">+</a>
-                        <%--                    </td>--%>
-                        <%--                    <td>--%>
+
                     <a href="${pageContext.request.contextPath}/tests?action=EDIT&testID=${test.id}"
                        class="btn btn-warning" style="" role="button" data-bs-toggle="button">Edit</a>
                     <a href="${pageContext.request.contextPath}/delete?action=test&id=${test.id}"
