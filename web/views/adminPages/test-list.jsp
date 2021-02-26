@@ -48,7 +48,7 @@
 <div class="container" style="padding-top: 10px; margin-bottom: 100px">
     <h3><%=LocaleTests%>
     </h3>
-    <a href="${pageContext.request.contextPath}/tests?action=add" class="btn btn btn-warning mb-5" style="width: 200px"
+    <a href="${pageContext.request.contextPath}/tests?action=add" class="btn btn btn-warning mb-0" style="width: 200px"
        role="button" data-bs-toggle="button"><%=LocaleAddTest%>
     </a>
     <table id="datatable" class="table table-hover">

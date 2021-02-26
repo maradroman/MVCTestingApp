@@ -46,7 +46,11 @@
 <div class="container" style="padding-top: 10px">
     <h3><%=LocaleUsers%>
     </h3>
-    <table class="table table-hover">
+    <a href="${pageContext.request.contextPath}/users?action=ADD" class="btn btn-warning mb-4" style="" role="button"
+       data-bs-toggle="button"><%=LocaleAddUser%>
+    </a>
+    <table id="datatable" class="table table-hover">
+        <thead>
         <tr class="thead-light">
             <th><%=LocaleUsername%>
             </th>
@@ -61,6 +65,8 @@
             <th><%=LocaleActions%>
             </th>
         </tr>
+        </thead>
+        <tbody>
         <c:forEach items="${list}" var="user">
             <tr>
                 <td>${user.username}</td>
@@ -78,7 +84,7 @@
                            class="btn btn-warning" style="" role="button" data-bs-toggle="button"><%=LocaleEdit%>
                         </a>
                         <a href="${pageContext.request.contextPath}/delete?action=user&id=${user.id}"
-                           class="btn btn-warning" style="" role="button" data-bs-toggle="button">delete user
+                           class="btn btn-danger" style="" role="button" data-bs-toggle="button">delete user
                         </a>
                     </td>
                 </c:if>
@@ -91,6 +97,9 @@
                         <a href="${pageContext.request.contextPath}/users?action=EDIT&id=${user.id}"
                            class="btn btn-warning" style="" role="button" data-bs-toggle="button"><%=LocaleEdit%>
                         </a>
+                        <a href="${pageContext.request.contextPath}/delete?action=user&id=${user.id}"
+                           class="btn btn-danger" style="" role="button" data-bs-toggle="button">delete user
+                        </a>
                     </td>
                 </c:if>
                 <c:if test="${user.type eq 'admin'}">
@@ -98,11 +107,20 @@
                 </c:if>
             </tr>
         </c:forEach>
+        </tbody>
+        <tfoot></tfoot>
     </table>
-    <a href="${pageContext.request.contextPath}/users?action=ADD" class="btn btn-warning" style="" role="button"
-       data-bs-toggle="button"><%=LocaleAddUser%>
-    </a>
+
 </div>
+<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#datatable').DataTable({
+            "lengthChange": false
+        });
+    })
+</script>
 </body>
 </html>
 <%request.getSession().removeAttribute("message");%>
