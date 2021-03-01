@@ -13,39 +13,44 @@ import static org.hamcrest.Matchers.*;
 
 class TopicTest {
     Topic topic = null;
+    final String NAME = "Hitchhiker's Guide to the Galaxy";
+    final Integer ID = 42;
+    final String ANOTHER_NAME = "New Name";
+    final Integer ANOTHER_ID = 40;
+    final String TO_STRING = "Topic{id=42, name='Hitchhiker's Guide to the Galaxy'}";
 
     @BeforeEach
     void init() {
         topic = new Topic();
-        topic.setName("Hitchhiker's Guide to the Galaxy");
-        topic.setId(42);
+        topic.setName(NAME);
+        topic.setId(ID);
     }
 
     @Test
     void getId() {
-        assertThat(42, equalTo(topic.getId()));
+        assertThat(ID, equalTo(topic.getId()));
 
     }
 
     @Test
     void setId() {
-        topic.setId(40);
-        assertThat(40, equalTo(topic.getId()));
+        topic.setId(ANOTHER_ID);
+        assertThat(ANOTHER_ID, equalTo(topic.getId()));
     }
 
     @Test
     void getName() {
-        assertThat("Hitchhiker's Guide to the Galaxy", equalTo(topic.getName()));
+        assertThat(NAME, equalTo(topic.getName()));
     }
 
     @Test
     void setName() {
-        topic.setName("New Name");
-        assertThat("New Name", equalTo(topic.getName()));
+        topic.setName(ANOTHER_NAME);
+        assertThat(ANOTHER_NAME, equalTo(topic.getName()));
     }
 
     @Test
     void testToString() {
-        assertThat("Topic{id=42, name='Hitchhiker's Guide to the Galaxy'}", equalTo(topic.toString()));
+        assertThat(TO_STRING, equalTo(topic.toString()));
     }
 }
